@@ -1,0 +1,72 @@
+name: Deploy mewcrazy/StripChat-Enhanced
+
+on:
+  push:
+    branches:
+      - main
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+  workflow_dispatch:
+
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    permissions:
+      contents: write
+      
+    steps:
+      # Step 1: Download waitForKeyElements.js
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Downloading waitForKeyElements.js
+        run: build/build.sh
+
+      # Step 2: Remove Google API Key from codebase
+      - name: Remove Google API Key from codebase
+        id: remove_api_keys
+        run: sed -i -e 's/var googleApiKey = "${{ secrets.GOOGLE_TRANSLATION_APIKEY }}"/var googleApiKey = ""/g' deploy/stripchat-enhanced.user.js
+
+      # Step 3: Check for any changes
+      - name: Check for any changes
+        id: verify_diff
+        run: |
+          git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
+
+      # Step 4: Commit
+      - name: Commit files
+        if: steps.verify_diff.outputs.changed == 'true'
+        run: |
+          git config --local user.name mewcrazy
+          git config --local user.email "kontakt@dennis-bitsch.de"      
+          git fetch
+          git add deploy/waitForKeyElements.min.js
+          git add deploy/jquery.min.js
+          git commit -am "Update repository files [skip ci]" 
+          git tag -d main
+          git push -f origin main
+
+      # Step 5: Push
+      - name: Push to GitHub
+        if: steps.verify_diff.outputs.changed == 'true'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          force: true
+
+      # Step 6: Release pushed tag
+      # - name: Create release
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     tag: ${{ github.ref_name }}
+      #   run: |
+      #     gh release create "$tag" \
+      #         'extensions/chrome.crx#chrome_extension_${tag#v}.crx' \
+      #         'extensions/firefox.zip#firefox_extension_${tag#v}.zip' \
+      #         'extensions/opera.crx#opera_extension_${tag#v}.crx' \
+      #         --repo="$GITHUB_REPOSITORY" \
+      #         --title="${tag#v}" \
+      #         --generate-notes

@@ -1,0 +1,14 @@
+{
+  "email": {
+    "message": "Email address"
+  },
+  "password": {
+    "message": "Password*"
+  },
+  "signin": {
+    "message": "Sign In*"
+  },
+  "signup": {
+    "message": "Sign Up*"
+  }
+}
