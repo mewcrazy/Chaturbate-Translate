@@ -1,7 +1,7 @@
 /* structure*/
 html, body { min-width: 320px; max-width: 100%; height: 4rem; margin: 0; }
-body { background: #303133; color: rgba(248, 248, 248, 0.6); font-family: Inter, "Helvetica Neue", Roboto, Arial, Helvetica, sans-serif; font-feature-settings: "liga" 1, "calt" 1; font-size-adjust: 0.54; }
-header { background-color: #141415; min-height: 42px; font-size: .75rem; display: flex; flex-direction: row; }
+body { background: #2d3e50; color: rgba(248, 248, 248, 0.6); font-family: Inter, "Helvetica Neue", Roboto, Arial, Helvetica, sans-serif; font-feature-settings: "liga" 1, "calt" 1; font-size-adjust: 0.54; }
+header { background-color: #0c6a93;border-bottom: 3px solid #f47321;  min-height: 42px; font-size: .75rem; display: flex; flex-direction: row; }
 .footer-text { font-size: 0.75rem;}
 
 /* typography */
@@ -18,7 +18,7 @@ a:hover { color: rgba(248, 248, 248, 0.66); }
 .form-signin .checkbox { font-weight: 400; }
 
 /* buttons */
-.btn-primary { align-items: center; border-radius: 16px; display: flex; flex-direction: row; font-size: 14px; font-weight: 500; justify-content: center; line-height: 16px; margin: 0; min-height: 32px; padding: 6px 14px; text-decoration: none; color: rgb(241, 241, 241); background: rgb(91, 91, 91); transition: 90ms ease-in-out; border-color: transparent; }
+.btn-primary { align-items: center; border-radius: 16px; display: flex; flex-direction: row; font-size: 14px; font-weight: 500; justify-content: center; line-height: 16px; margin: 0; min-height: 32px; padding: 6px 14px; text-decoration: none; color: rgb(241, 241, 241); background: #0c6a93; transition: 90ms ease-in-out; border-color: transparent; }
 .btn-primary:hover { color: rgb(65, 65, 65); background: rgb(255, 255, 255); border-color: transparent; }
 
 /* logged in */

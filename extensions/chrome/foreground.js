@@ -402,7 +402,7 @@ function addLangDropdown(jNode) {
     let modelChatSubmit = $(jNode).find('.a11y-button')
 
     // add dropdown html
-    if(!modelChat.find('.language-picker').length) {
+    if(!modelChat.find('.se-langpicker').length) {
         $(jNode).before(htmlLangPicker);
         
         // prepopulate
@@ -465,23 +465,23 @@ function addLangDropdown(jNode) {
     })
 
     // hide language chooser on send button && smiles button click
-    $('[class*="ChatInput__sendBtn"], [class*="SmilesButton"]').on('click', () => { $('.language-chooser').addClass("hidden") })
+    $('.SendButton.chat').on('click', () => { $('.language-chooser').addClass("hidden") })
 
     // click language button
     $('.se-langpicker').off().on('click', function(e) {
         if(!$('.msg-list-wrapper-split .language-chooser').length) {
-            $('.msg-list-wrapper-split').append(htmlLangChooser);
+          $('.msg-list-wrapper-split').append(htmlLangChooser);
 
-            // add all languages
-            populateLanguageDropdowns()
+          // add all languages
+          populateLanguageDropdowns()
         } else {
-            $('.msg-list-wrapper-split .language-chooser').toggleClass('hidden')
+          $('.msg-list-wrapper-split .language-chooser').toggleClass('hidden')
         }
     })
 
     // reset language on right click
     $(".se-langpicker").on("contextmenu", function() { return false; });
-    $('#body').on('mousedown', '.se-langpicker', function(e) {
+    $('.se-langpicker').on('mousedown', function(e) {
         if( e.button == 2 ) {
           $('.se-langpicker').find('.flag,use').remove()
           $('.language-chooser .flag').removeClass('active')
@@ -493,7 +493,7 @@ function addLangDropdown(jNode) {
     })
 
     // close language chooser
-    $('.language-chooser').on('click', '.close-language-chooser', function(e) {
+    $('.language-chooser').on('click', '.close', function(e) {
         $('.language-chooser').addClass("hidden")
     })
 
