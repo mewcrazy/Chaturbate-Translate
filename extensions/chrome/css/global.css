@@ -17,26 +17,26 @@ button + .se-loader { display: none; }
 .enhanced-options-content .switcher .switcher-wrapper { transform: translateX(0); }
   
 /* language picker */
-.se-langpicker { opacity: .6; cursor: pointer; text-align: center; width: 24px; height: 24px; margin-left: 0 !important; margin-right: 8px !important; }
+.se-langpicker { position: absolute; top: 6px; left: 2px; z-index: 1; opacity: .6; cursor: pointer; text-align: center; width: 24px; height: 24px; margin-left: 0 !important; margin-right: 8px !important; }
 .se-langpicker:hover { opacity: 1; }
-.se-langpicker option { text-align: center; font-size: 1.35em }
 .se-langpicker .flag { width: 25px; height: 17px; margin-top: 3px; border: 1px solid rgba(255, 255, 255, .25); }
+.se-langpicker > svg:first-child { width: 16px; height: 16px; }
 .se-langpicker svg+svg { display: none !important }
-.chat-input textarea { padding-left: 25px }
-.ChatInput__inputBlock\#xL { padding-left: 8px !important; }
+.customInput.chat-input-field, .inputFieldChatPlaceholder::before { padding-left: 21px }
 
 /* language chooser */
-.language-chooser { bottom: 60px; display: flex; max-height: 80%; position: absolute; width: 100%; z-index: 2; overflow: hidden }
+.language-chooser { background: #17202a; bottom: 33px; right: 24px; left: 0; display: flex; max-height: 80%; position: absolute; width: 100%; z-index: 2; overflow: hidden }
 .language-chooser > div { height: 275px }
-.language-chooser .title-block { justify-content: none; gap: 30px; }
+.language-chooser .title-block { display: flex; justify-content: space-between; justify-content: none; gap: 30px; }
 .language-chooser .title-block > span { font-size: 14px; }
 .language-chooser .title-block .search { flex-grow: 1 }
+.language-chooser .close-language-chooser { position: absolute; top: 10px; right: 10px; background: 0; color: rgba(255,255,255,.6); border: 0; outline: 0; justify-self: flex-end;}
+.language-chooser .close-language-chooser:hover { color: #fff; }
 .messenger-chats .language-chooser { bottom: 0; }
 .messenger-chats [class*="SmilesWidgetContainer__closeBtn"] { margin: -6px -6px -6px -10px }
-.language-list { margin: 0 -10px; }
 .language-list >.flag { background: none; outline: 0; border: 0; cursor: pointer; line-height: 1; margin: 3px; cursor: pointer; padding: 4px 6px 3px 6px; }
 .language-list >.flag.active { border: 1px solid #fff }
-.language-list >.flag svg { width: 25px; height: 17px; pointer-events: none; }
+.language-list >.flag svg { background: none; width: 25px; height: 17px; pointer-events: none; }
 .language-list .flag-ta, .language-list .flag-sa, .language-list .flag-pa, .language-list .flag-ne { background: #fff; }
 input[type="search"].input.language-search { background: rgba(0,0,0,.2); padding: 10px 15px; height: 30px; border-radius: 15px }
 input[type="search"].input.language-search:hover { background: rgba(0,0,0,1) }

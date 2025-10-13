@@ -395,15 +395,15 @@ function openPip(elem) {
 /**
  * Add language/translation dropdown to main chat
  */
-waitForKeyElements(".model-chat-input", addLangDropdown, false);
+waitForKeyElements("#ChatTabContainer .chat-input-form", addLangDropdown, false);
 function addLangDropdown(jNode) {
-    let modelChat = $(jNode).closest('.model-chat-public')
-    let modelChatInput = $(jNode).find('input')
+    let modelChat = $(jNode).closest('.ChatTabContents')
+    let modelChatInput = $(jNode).find('.customInput.chat-input-field')
     let modelChatSubmit = $(jNode).find('.a11y-button')
 
     // add dropdown html
     if(!modelChat.find('.language-picker').length) {
-        $(jNode).children('div').prepend(htmlLangPicker);
+        $(jNode).before(htmlLangPicker);
         
         // prepopulate
         populateLanguageDropdowns()
@@ -418,13 +418,20 @@ function addLangDropdown(jNode) {
     }
 
     // surpress StripChat's default submit (on keypress)
-    modelChatInput.on('submit', function(e) {
+    $('.chat-input-form').on('submit', function(e) {
         e.preventDefault()
         e.stopImmediatePropagation()
         e.stopPropagation()
     })
 
     // add own keypress event
+    modelChatInput.on('keyup', function(e) {
+        if(e.which == 13) {
+            e.preventDefault()
+            e.stopImmediatePropagation()
+            e.stopPropagation()
+        }
+    })
     modelChatInput.on('keydown', function(e) {
         if(e.which == 13) {
             e.preventDefault()
@@ -435,19 +442,19 @@ function addLangDropdown(jNode) {
             if($('.se-langpicker').attr('data-active')) {
 
                 // only logged in users
-                if(!$('.nav-right .avatar').length) {
+                if(!$('.user_information_container').length) {
                     alert("You have to be logged in to send translated messages.")
                     return
                 }
-
-                $('[class*="ChatInput__inputBlock"]').append('<span class="se-loader-line"></span>') // TODO please as before
-
-                translateGoogle(modelChatInput.val(), $('.se-langpicker').attr('data-active').toLowerCase(), $('.model-chat-content')).then(function(data) {
-                    // TODO: console.log missing/wrong languages
-                    modelChatInput.val('')
+                
+                alert(modelChatInput.length)
+                alert(modelChatInput.text())
+                alert(modelChatInput.html())
+                translateGoogle(modelChatInput.text(), $('.se-langpicker').attr('data-active').toLowerCase(), $('.msg-list-wrapper-split')).then(function(data) {
+                    modelChatInput.text('')
                     modelChatInput.focus()
                     document.execCommand('insertText', false, decodeHtml(data.data.translations[0].translatedText))
-                    modelChatSubmit.click()
+                    //modelChatSubmit.click()
                 }); // TODO add error handling (throw tooltip above input)
             } else {
                 // no translation needed
@@ -461,14 +468,14 @@ function addLangDropdown(jNode) {
     $('[class*="ChatInput__sendBtn"], [class*="SmilesButton"]').on('click', () => { $('.language-chooser').addClass("hidden") })
 
     // click language button
-    $('.model-chat-public').off().on('click', '.se-langpicker', function(e) {
-        if(!$('.model-chat .language-chooser').length) {
-            $('.model-chat .model-chat-content').before(htmlLangChooser);
+    $('.se-langpicker').off().on('click', function(e) {
+        if(!$('.msg-list-wrapper-split .language-chooser').length) {
+            $('.msg-list-wrapper-split').append(htmlLangChooser);
 
             // add all languages
             populateLanguageDropdowns()
         } else {
-            $('.model-chat-public .language-chooser').toggleClass('hidden')
+            $('.msg-list-wrapper-split .language-chooser').toggleClass('hidden')
         }
     })
 
@@ -486,12 +493,12 @@ function addLangDropdown(jNode) {
     })
 
     // close language chooser
-    $('.model-chat').on('click', '.close-language-chooser', function(e) {
+    $('.language-chooser').on('click', '.close-language-chooser', function(e) {
         $('.language-chooser').addClass("hidden")
     })
 
     // select/switch language
-    $('.model-chat-public').on('click', '.language-chooser .flag', function(e) {
+    $('.msg-list-wrapper-split').off().on('click', '.language-chooser .flag', function(e) {
 
         $('.se-langpicker').find('.flag,use').remove()
         if($(this).hasClass('active')) {

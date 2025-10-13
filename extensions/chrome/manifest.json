@@ -1,9 +1,9 @@
 {
     "manifest_version": 3,
-    "name": "Stripchat Enhanced",
-    "description": "A browser extension to extend Stripchat with new useful features like translations of public chat and private chat messages.",
-    "version": "0.0.1",
-    "update_url": "http://mewcrazy.github.io/Stripchat-Enhanced/extensions/chrome/updates.xml",
+    "name": "Chaturbate Translate",
+    "description": "A browser extension to extend Chaturbate with new useful features like translations of public chat and private chat messages.",
+    "version": "0.0.2",
+    "update_url": "http://mewcrazy.github.io/Chaturbate-Enhanced/extensions/chrome/updates.xml",
     "default_locale": "en_US",
     "icons": {
         "16": "img/icon_16.png",
@@ -13,13 +13,13 @@
     },
     "options_page": "settings/settings.html",
     "action": {
-        "default_title": "Stripchat Enhanced",
+        "default_title": "Chaturbate Translate",
         "default_popup": "popup/popup.html"
     },
     "permissions": ["scripting", "activeTab"],
     "host_permissions": [
-        "*://stripchat.com/*",
-        "*://*.stripchat.com/*"
+        "*://chaturbate.com/*",
+        "*://*.chaturbate.com/*"
     ],
     "background": {
         "service_worker": "service-worker.js"
@@ -29,7 +29,7 @@
         "suggested_key": {
             "default": "Alt+S"
         },
-        "description": "Open the Stripchat Enhanced popup"
+        "description": "Open the Chaturbate Translate popup"
         }
     },
     "content_scripts": [
@@ -41,9 +41,9 @@
             ],
             "css": ["css/global.css"],
             "matches": [
-                "*://stripchat.com/",
-                "*://stripchat.com/*",
-                "*://*.stripchat.com/*"
+                "*://chaturbate.com/",
+                "*://chaturbate.com/*",
+                "*://*.chaturbate.com/*"
             ]
         }
     ],

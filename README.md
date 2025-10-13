@@ -1,16 +1,16 @@
-# <p align="center">Chaturbate Enhanced</p>
+# <p align="center">Chaturbate Translate</p>
 <p align="center">A browser extension to extend Chaturbate with new useful features like on-the-fly translations of your sent text message as well as received public chat and private chat messages, and many more features.</p>
 
 <!--<p align="center" width="100%">
-  <a href="https://github.com/mewcrazy/Stripchat-Enhanced/archive/refs/heads/main.zip"><img src="https://shields.io/github/downloads/mewcrazy/Stripchat-Enhanced/total"></a>
+  <a href="https://github.com/mewcrazy/Stripchat-Translate/archive/refs/heads/main.zip"><img src="https://shields.io/github/downloads/mewcrazy/Stripchat-Translate/total"></a>
 </p>
 
 <p align="center" width="100%">
-    <img width="100%" src="https://github.com/mewcrazy/Stripchat-Enhanced/raw/main/img/animation-translate-chat.gif"> 
+    <img width="100%" src="https://github.com/mewcrazy/Stripchat-Translate/raw/main/img/animation-translate-chat.gif"> 
 </p>-->
 
 > [!WARNING]
-> Chaturbate Enhanced is currently in active development and is not ready to use yet. We plan to release our first preview version on the 20th October 2025.
+> Chaturbate Translate is currently in active development and is not ready to use yet. We plan to release our first preview version on the 20th October 2025.
 
 ## Planned Features:
 - Translate chat messages, tip menus, tip goals and private show testimonials <sub style="color:rgba(255,255,255,.55)">(in over different 100 languages with 1-click)</sub>
@@ -27,15 +27,15 @@
 Simply install the extension for your preferred browser:
 
 <!--<p width="100%">
-    <a href="https://github.com/mewcrazy/Stripchat-Enhanced/raw/refs/heads/main/extensions/chrome.crx"><img width="206" src="https://github.com/mewcrazy/Stripchat-Enhanced/raw/main/img/get-it-for-chrome.png"></a>
-    <a href="https://github.com/mewcrazy/Stripchat-Enhanced/raw/refs/heads/main/extensions/firefox.zip"><img width="206" src="https://github.com/mewcrazy/Stripchat-Enhanced/raw/main/img/get-it-for-firefox.png"></a>
-    <a href="https://github.com/mewcrazy/Stripchat-Enhanced/raw/refs/heads/main/extensions/opera.crx"><img width="206" src="https://github.com/mewcrazy/Stripchat-Enhanced/raw/main/img/get-it-for-opera.png"></a>
+    <a href="https://github.com/mewcrazy/Stripchat-Translate/raw/refs/heads/main/extensions/chrome.crx"><img width="206" src="https://github.com/mewcrazy/Stripchat-Translate/raw/main/img/get-it-for-chrome.png"></a>
+    <a href="https://github.com/mewcrazy/Stripchat-Translate/raw/refs/heads/main/extensions/firefox.zip"><img width="206" src="https://github.com/mewcrazy/Stripchat-Translate/raw/main/img/get-it-for-firefox.png"></a>
+    <a href="https://github.com/mewcrazy/Stripchat-Translate/raw/refs/heads/main/extensions/opera.crx"><img width="206" src="https://github.com/mewcrazy/Stripchat-Translate/raw/main/img/get-it-for-opera.png"></a>
 </p>-->
 
 Please note that this script requires an API Key for the Google Cloud Translation API. Simply log in your Google account, and create a New Project for the Cloud Translation API. After you can click on "Login Credentials" and create a new API Key which you can use in this script.
 
 ## Language list
-Chaturbate Enhanced supports all available languages offered by Google's Cloud Translation API, in total *123 languages*.
+Chaturbate Translate supports all available languages offered by Google's Cloud Translation API, in total *123 languages*.
 
 | English Name  | Local Name | ISO-639 Code  |
 | ------------- | ------------- | ------------- |
@@ -173,7 +173,7 @@ Yiddish|ייִדיש|yi
 Yoruba|Yorùbá|yo
 
 ## Contributing
-We welcome any contributions! If you're having ideas or improvements to Chaturbate Enhanced, simply create a meaningful push request or open an issue and we will take care of it.
+We welcome any contributions! If you're having ideas or improvements to Chaturbate Translate, simply create a meaningful push request or open an issue and we will take care of it.
 
 ## Used Frameworks/Utilities:
 - [CoeJoder/waitForKeyElements.js](https://github.com/CoeJoder/waitForKeyElements.js) - A utility function for userscripts that detects and handles AJAXed content.
