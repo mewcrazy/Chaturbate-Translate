@@ -472,6 +472,12 @@ function addLangDropdown(jNode) {
 
           // add all languages
           populateLanguageDropdowns()
+          
+          // close language chooser
+          $('.language-chooser').on('click', '.close', function(e) {
+            $('.language-chooser').addClass("hidden")
+          })
+          
         } else {
           $('.msg-list-wrapper-split .language-chooser').toggleClass('hidden')
         }
@@ -488,11 +494,6 @@ function addLangDropdown(jNode) {
           return false;
         }
         return true;
-    })
-
-    // close language chooser
-    $('.language-chooser').on('click', '.close', function(e) {
-        $('.language-chooser').addClass("hidden")
     })
 
     // select/switch language
@@ -516,17 +517,25 @@ function addLangDropdown(jNode) {
     // search language by html attributes
     $('.ChatTabContents').off().on("keyup", ".language-search", function() {
       var value = this.value.toLowerCase().trim();
-      if(value.length) {
-        $(".language-list button").show().filter(function() {
-            return $(this).attr("data-search").toLowerCase().trim().indexOf(value) == -1;
-        }).hide();
-      } else {
+      if (value.length >= 2) {
+          var elem = $(this);
+          elem.data('search',  value)
+          .clearQueue().stop()
+          .delay(500)
+          // runs search
+          .queue(function() {
+            $(".language-list button").show().filter(function() {
+                return $(this).attr("data-search").toLowerCase().trim().indexOf(value) == -1;
+            }).hide();
+            if (elem.data('search') !=  value) return;
+          });
+      } else if (value.length <= 1) {
         $(".language-list button").show();
       }
     });
 
     // clear search input
-    $('.model-chat').on('search', '.language-search', function() {
+    $('.ChatTabContents').on('search', '.language-search', function() {
       if(this.value === "") {
         $(".language-list button").show()
       }
