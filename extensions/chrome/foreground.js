@@ -13,6 +13,7 @@ var translationLanguages = []
 var htmlModelOverlay = getResource("html/modelinfo-overlay.html");
 var htmlLangChooser = getResource("html/language-chooser.html");
 //var htmlLangChooserPrivates = getResource("html/language-chooser-private.html");
+var htmlAutoTipOverlay = getResource("html/overlay-auto-tip.html")
 var htmlLangPicker = getResource("html/language-picker.html")
 //var htmlTicketGroupshowsFilters = getResource("html/filters-ticketgroupshows.html");
 var htmlTranslateButton = '<span class="translate-line"><button class="a11y-button TranslateButton#ZN TranslateButton_outline#qg chat-message-translate-button" style="float: none; display: inline-block;" type="button"><svg style="height: 14px; width: 14px;" class="IconV2__icon#YR" viewBox="0 0 16 14"><path fill="currentColor" fill-rule="evenodd" d="M10.28 1.72V3h-1.5a18.53 18.53 0 0 1-2.6 4.52l.05.05c.43.46.86.93 1.3 1.38l-.9.9c-.37-.36-.72-.74-1.07-1.13l-.2-.21c-.9.99-1.9 1.88-3 2.67l-.77-1.02.03-.02a17.36 17.36 0 0 0 2.87-2.58c-.52-.6-1.03-1.19-1.52-1.8L2.1 4.68l1-.8.86 1.08c.44.54.9 1.07 1.36 1.6C6.15 5.46 6.84 4.27 7.4 3H.68V1.72h4.48V.44h1.28v1.28h3.84Zm5.04 11.84h-1.38L13 11.32H9.48l-.93 2.24H7.17l3.32-8H12l3.33 8ZM11.24 7.1l-1.22 2.94h2.45L11.24 7.1Z" clip-rule="evenodd"></path></svg></button></span>'
@@ -541,6 +542,36 @@ function addLangDropdown(jNode) {
       }
     });
 
+}
+
+
+/**
+ * Auto Tip Button
+ */
+waitForKeyElements("#sendTipButton", addAutoTipButton, false);
+function addAutoTipButton(el) {
+  let htmlAutoTipButton = '<span class="auto-tip-button sendTipButton" title="Auto TIP" data-testid="send-tip-button" class="sendTipButton" style="overflow: hidden; line-height: 1.4; height: 24px; font-size: 12px; font-family: UbuntuMedium, Helvetica, Arial, sans-serif; margin: 11px 4px 11px 0px; text-overflow: ellipsis; white-space: nowrap; padding: 3px 10px; box-sizing: border-box; cursor: pointer; display: inline-block; border-width: 1px; border-style: solid;">AUTO TIP</span>'
+
+  // append button
+  if(!$('.auto-tip-button').length)
+    $(el).after(htmlAutoTipButton)
+
+  // auto tip button handler
+  $('.auto-tip-button').on('click', function(e) {
+    $('#main > div').append(htmlAutoTipOverlay)
+  })
+
+  // send auto tip
+  $('.auto-tip-overlay form').on('submit', function(e) {
+    e.preventDefault()
+
+    // execute autotip js
+    let timeout = xxx; // time between tips in milliseconds
+    let tokens = xx; // number of times sent
+    let tip_amount = xx; // number of tokens per tip
+    let username = "xxxxxxx"; // user to tip
+    //eval('for(i=0;i<tokens;i++) { setTimeout(function() { $.post("https://chaturbate.com/tipping/send_tip/" + username + "/", {"csrfmiddlewaretoken":$.cookie("csrftoken"), tip_amount: tip_amount})}, i*timeout)}')
+  })
 }
 
 
