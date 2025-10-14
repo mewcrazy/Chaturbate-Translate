@@ -12,11 +12,10 @@ var translationLanguages = []
 
 var htmlModelOverlay = getResource("html/modelinfo-overlay.html");
 var htmlLangChooser = getResource("html/language-chooser.html");
-var htmlLangChooserPrivates = getResource("html/language-chooser-private.html");
+//var htmlLangChooserPrivates = getResource("html/language-chooser-private.html");
 var htmlLangPicker = getResource("html/language-picker.html")
-var htmlTicketGroupshowsFilters = getResource("html/filters-ticketgroupshows.html");
+//var htmlTicketGroupshowsFilters = getResource("html/filters-ticketgroupshows.html");
 var htmlTranslateButton = '<span class="translate-line"><button class="a11y-button TranslateButton#ZN TranslateButton_outline#qg chat-message-translate-button" style="float: none; display: inline-block;" type="button"><svg style="height: 14px; width: 14px;" class="IconV2__icon#YR" viewBox="0 0 16 14"><path fill="currentColor" fill-rule="evenodd" d="M10.28 1.72V3h-1.5a18.53 18.53 0 0 1-2.6 4.52l.05.05c.43.46.86.93 1.3 1.38l-.9.9c-.37-.36-.72-.74-1.07-1.13l-.2-.21c-.9.99-1.9 1.88-3 2.67l-.77-1.02.03-.02a17.36 17.36 0 0 0 2.87-2.58c-.52-.6-1.03-1.19-1.52-1.8L2.1 4.68l1-.8.86 1.08c.44.54.9 1.07 1.36 1.6C6.15 5.46 6.84 4.27 7.4 3H.68V1.72h4.48V.44h1.28v1.28h3.84Zm5.04 11.84h-1.38L13 11.32H9.48l-.93 2.24H7.17l3.32-8H12l3.33 8ZM11.24 7.1l-1.22 2.94h2.45L11.24 7.1Z" clip-rule="evenodd"></path></svg></button></span>'
-var htmlSortByTokensButton = '<p class="se-tipmenu-sort text-center"><button class="a11y-button TipMenuDiscountViewCamPanel__button#be" type="button"><svg class="TipMenuDiscountViewCamPanel__diamond#DY icon icon-watch-history"><use xlink:href="#icons-watch-history"></use></svg><small>Sort by Tokens</small></button></p>'
 
 
 /**
@@ -399,7 +398,7 @@ waitForKeyElements("#ChatTabContainer .chat-input-form", addLangDropdown, false)
 function addLangDropdown(jNode) {
     let modelChat = $(jNode).closest('.ChatTabContents')
     let modelChatInput = $(jNode).find('.customInput.chat-input-field')
-    let modelChatSubmit = $(jNode).find('.a11y-button')
+    let modelChatSubmit = $(jNode).closest('.inputDiv').find('.SendButton.chat')
 
     // add dropdown html
     if(!modelChat.find('.se-langpicker').length) {
@@ -417,27 +416,27 @@ function addLangDropdown(jNode) {
         }
     }
 
-    // surpress StripChat's default submit (on keypress)
-    $('.chat-input-form').on('submit', function(e) {
-        e.preventDefault()
-        e.stopImmediatePropagation()
-        e.stopPropagation()
-    })
+    // create own input
+    $(jNode).find('.chat-input-field').addClass('hidden')
+    $(jNode).append('<input class="se-custom-input customInput chat-input-field" type="text" value="" style="background: none; color: #b3b3b3; height: 16px; width: 100%; position: relative; overflow: scroll hidden; -webkit-tap-highlight-color: transparent; outline: none; border: none; box-sizing: border-box; font-size: 12px; white-space: nowrap; user-select: text; font-family: Helvetica, Arial, sans-serif; line-height: 15px;">')
 
     // add own keypress event
-    modelChatInput.on('keyup', function(e) {
-        if(e.which == 13) {
-            e.preventDefault()
-            e.stopImmediatePropagation()
-            e.stopPropagation()
-        }
+    $('.se-custom-input').on('blur', function(e) {
+      modelChatInput.text($(this).val()).trigger("blur").trigger("input").trigger("paste")
     })
-    modelChatInput.on('keydown', function(e) {
+    $('.se-custom-input').on('blur', function(e) {
+      modelChatInput.text($(this).val()).trigger("blur").trigger("input").trigger("paste")
+    })
+
+    $(jNode).closest('div').off().on('click', '.SendButton.chat', function() {
+      $('.se-custom-input').val('')
+    })
+    $('.se-custom-input').on('keydown', function(e) {
         if(e.which == 13) {
-            e.preventDefault()
-            e.stopImmediatePropagation()
-            e.stopPropagation()
-            $('.language-chooser').addClass("hidden")
+          e.preventDefault()
+          e.stopImmediatePropagation()
+          e.stopPropagation()
+          $('.language-chooser').addClass("hidden")
 
             if($('.se-langpicker').attr('data-active')) {
 
@@ -447,15 +446,14 @@ function addLangDropdown(jNode) {
                     return
                 }
                 
-                alert(modelChatInput.length)
-                alert(modelChatInput.text())
-                alert(modelChatInput.html())
-                translateGoogle(modelChatInput.text(), $('.se-langpicker').attr('data-active').toLowerCase(), $('.msg-list-wrapper-split')).then(function(data) {
-                    modelChatInput.text('')
-                    modelChatInput.focus()
-                    document.execCommand('insertText', false, decodeHtml(data.data.translations[0].translatedText))
-                    //modelChatSubmit.click()
-                }); // TODO add error handling (throw tooltip above input)
+                translateGoogle($(this).val(), $('.se-langpicker').attr('data-active').toLowerCase(), $('.msg-list-wrapper-split')).then((data) => {
+                    let t = decodeHtml(data.data.translations[0].translatedText)
+                    $(this).val('').focus()
+                    document.execCommand('insertText', false, t)
+                    modelChatInput.text(t)
+                    console.log($('.BaseTabsContainer .SendButton').length)
+                    $('.BaseTabsContainer .SendButton').click()
+                });
             } else {
                 // no translation needed
                 modelChatSubmit.click()
@@ -516,8 +514,8 @@ function addLangDropdown(jNode) {
     })
 
     // search language by html attributes
-    $(".model-chat").on("keyup", ".language-search", function() {
-        var value = this.value.toLowerCase().trim();
+    $('.ChatTabContents').off().on("keyup", ".language-search", function() {
+      var value = this.value.toLowerCase().trim();
       if(value.length) {
         $(".language-list button").show().filter(function() {
             return $(this).attr("data-search").toLowerCase().trim().indexOf(value) == -1;

@@ -20,14 +20,14 @@ button + .se-loader { display: none; }
 .customInput.chat-input-field, .inputFieldChatPlaceholder::before { padding-left: 21px }
 
 /* language chooser */
-.language-chooser { background: #17202a; bottom: 33px; right: 24px; left: 0; display: flex; max-height: 80%; position: absolute; width: 100%; z-index: 2; overflow: hidden }
+.language-chooser { background: #17202a; bottom: 33px; right: 24px; left: 0; max-height: 80%; position: absolute; width: 100%; z-index: 2; overflow: hidden }
 .language-chooser > div { height: 275px }
 .language-chooser .title-block { display: flex; justify-content: space-between; justify-content: none; gap: 30px; }
 .language-chooser .title-block > span { font-size: 14px; }
 .language-chooser .title-block .search { flex-grow: 1 }
 .language-chooser .close { position: absolute; top: 10px; right: 10px; background: 0; color: rgba(255,255,255,.6); border: 0; outline: 0; justify-self: flex-end;}
 .language-chooser .close:hover { color: #fff; }
-.messenger-chats .language-chooser { bottom: 0; }
+.language-list { overflow: scroll; max-height: 250px; }
 .language-list >.flag { background: none; outline: 0; border: 0; cursor: pointer; line-height: 1; margin: 3px; cursor: pointer; padding: 4px 6px 3px 6px; }
 .language-list >.flag.active { border: 1px solid #fff }
 .language-list >.flag svg { background: none; width: 25px; height: 17px; pointer-events: none; }
