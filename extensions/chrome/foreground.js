@@ -54,44 +54,40 @@ function saveFavoritesSorting(el) {
 /**
  * Add global options flyout & Output website time in header
  */
-waitForKeyElements(".personal-notifications-modal-panel", addOptionsMenu);
-function addOptionsMenu(jNode) {
+waitForKeyElements(".broadcast-yourself", addOptionsMenu);
+function addOptionsMenu(el) {
 
   // Add global options flyout
-  if(!$(jNode).find('.open-enhanced-options').length) {
+  if(!$(el).closest('ul').find('.open-enhanced-options').length) {
 
     // add button
-    $(jNode).prepend('<button class="a11y-button dropdown-link open-enhanced-options" type="button"><span>E</span></button>')
+    $(el).after('<button class="a11y-button dropdown-link open-enhanced-options" type="button"><span><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="height: 1.2em;"><path d="M14.9474 6.50932L14.1034 6.20998C13.9826 6.16702 13.8721 6.09916 13.7791 6.01078C13.6862 5.92241 13.6128 5.8155 13.5638 5.69697C13.5148 5.57845 13.4912 5.45094 13.4946 5.32272C13.498 5.19451 13.5282 5.06843 13.5834 4.95265L13.9674 4.14398C14.1075 3.84868 14.1528 3.51727 14.0971 3.19521C14.0414 2.87315 13.8874 2.57621 13.6563 2.3451C13.4252 2.11398 13.1283 1.96002 12.8062 1.90432C12.4842 1.84862 12.1528 1.89391 11.8574 2.03398L11.0488 2.41865C10.9329 2.47361 10.8069 2.50365 10.6787 2.50683C10.5505 2.51002 10.4231 2.48628 10.3046 2.43715C10.1862 2.38802 10.0794 2.31458 9.99111 2.2216C9.90283 2.12861 9.83504 2.01814 9.79211 1.89732L9.49211 1.05398C9.38235 0.746123 9.18003 0.479756 8.91292 0.291408C8.6458 0.103059 8.32696 0.00195313 8.00011 0.00195312C7.67327 0.00195312 7.35443 0.103059 7.08731 0.291408C6.82019 0.479756 6.61788 0.746123 6.50811 1.05398L6.20811 1.89798C6.16512 2.01875 6.09728 2.12915 6.00897 2.22206C5.92066 2.31498 5.81384 2.38834 5.69541 2.4374C5.57699 2.48647 5.44959 2.51015 5.32144 2.50692C5.19329 2.50369 5.06725 2.47362 4.95145 2.41865L4.14278 2.03398C3.84747 1.89391 3.51607 1.84862 3.19401 1.90432C2.87195 1.96002 2.575 2.11398 2.34389 2.3451C2.11278 2.57621 1.95882 2.87315 1.90312 3.19521C1.84742 3.51727 1.89271 3.84868 2.03278 4.14398L2.41678 4.95265C2.47188 5.06844 2.50207 5.19451 2.5054 5.3227C2.50873 5.45089 2.48513 5.57835 2.43613 5.69685C2.38712 5.81535 2.31379 5.92224 2.22089 6.01063C2.12799 6.09902 2.01757 6.16693 1.89678 6.20998L1.05278 6.50998C0.744848 6.61958 0.478381 6.8218 0.289952 7.08887C0.101523 7.35595 0.000366211 7.6748 0.000366211 8.00165C0.000366211 8.32851 0.101523 8.64735 0.289952 8.91443C0.478381 9.1815 0.744848 9.38372 1.05278 9.49332L1.89678 9.79332C2.01755 9.83629 2.12795 9.90414 2.22085 9.99246C2.31375 10.0808 2.38708 10.1876 2.43609 10.3061C2.4851 10.4245 2.50871 10.5519 2.50538 10.6801C2.50206 10.8082 2.47187 10.9342 2.41678 11.05L2.03278 11.8587C1.89271 12.154 1.84742 12.4854 1.90312 12.8074C1.95882 13.1295 2.11278 13.4264 2.34389 13.6575C2.575 13.8887 2.87195 14.0426 3.19401 14.0983C3.51607 14.154 3.84747 14.1087 4.14278 13.9687L4.95145 13.5847C5.06722 13.5295 5.19329 13.4992 5.3215 13.4959C5.44971 13.4926 5.57718 13.5162 5.69566 13.5653C5.81415 13.6144 5.92099 13.6878 6.00927 13.7809C6.09755 13.8739 6.1653 13.9844 6.20811 14.1053L6.50811 14.9487C6.61788 15.2565 6.82019 15.5229 7.08731 15.7112C7.35443 15.8996 7.67327 16.0007 8.00011 16.0007C8.32696 16.0007 8.6458 15.8996 8.91292 15.7112C9.18003 15.5229 9.38235 15.2565 9.49211 14.9487L9.79211 14.1047C9.83509 13.9839 9.90293 13.8735 9.99126 13.7806C10.0796 13.6877 10.1864 13.6144 10.3049 13.5653C10.4233 13.5163 10.5507 13.4927 10.6789 13.496C10.807 13.4994 10.933 13.5296 11.0488 13.5847L11.8574 13.9687C12.1528 14.1087 12.4842 14.154 12.8062 14.0983C13.1283 14.0426 13.4252 13.8887 13.6563 13.6575C13.8874 13.4264 14.0414 13.1295 14.0971 12.8074C14.1528 12.4854 14.1075 12.154 13.9674 11.8587L13.5834 11.05C13.5284 10.9342 13.4982 10.8082 13.4948 10.6801C13.4915 10.5519 13.5151 10.4245 13.5641 10.3061C13.6131 10.1876 13.6865 10.0808 13.7794 9.99246C13.8723 9.90414 13.9827 9.83629 14.1034 9.79332L14.9474 9.49265C15.2554 9.38305 15.5218 9.18084 15.7103 8.91376C15.8987 8.64669 15.9999 8.32784 15.9999 8.00098C15.9999 7.67413 15.8987 7.35528 15.7103 7.08821C15.5218 6.82113 15.2554 6.61892 14.9474 6.50932ZM8.00011 11.1907C7.37045 11.1815 6.75667 10.9917 6.2318 10.6437C5.70693 10.2958 5.29306 9.80438 5.03945 9.22798C4.71516 8.44275 4.71553 7.56095 5.04046 6.77598C5.3654 5.99102 5.98838 5.36695 6.77278 5.04065C7.55892 4.72626 8.43681 4.73154 9.21911 5.05537C10.0014 5.3792 10.6262 5.99594 10.9601 6.77398C11.2844 7.55922 11.284 8.44102 10.9591 9.22598C10.6342 10.011 10.0112 10.635 9.22678 10.9613C8.83799 11.1212 8.42042 11.1993 8.00011 11.1907Z"></path></svg></span></button>')
 
     // html options overlay
-    $('#personal-notifications-portal-container').load(chrome.runtime.getURL('html/enhanced-options.html'));
+    $('body').append('<div class="blurred-login-overlay hidden" style="position: fixed; display: block; inset: 0px; z-index: 1100; visibility: visible;"></div><div class="enhanced-options-modal hidden"></div>')
+    $('.enhanced-options-modal').load(chrome.runtime.getURL('html/enhanced-options.html'));
 
     // process options
     processOptions()
   }
 
-  // Output once and refresh time in website header
-  updateTime()
-  setInterval(() => { updateTime() }, 1000)
-
   // open options menu
-  $('#body').on('click', '.open-enhanced-options', function(e) {
-    $('.enhanced-options-modal').toggleClass('hidden')
+  $('.open-enhanced-options').on('click', (e) => {
+    $('.enhanced-options-modal,.blurred-login-overlay').toggleClass('hidden')
   })
 
   // close options menu
-  $('#body').on('click', '.enhanced-options-close', function(e) {
-    $('.personal-notifications-modal').remove()
-    $('.enhanced-options-modal').toggleClass('hidden')
+  $('.enhanced-options-modal').on('click', '.enhanced-options-close', (e) => {
+    $('.enhanced-options-modal,.blurred-login-overlay').toggleClass('hidden')
   })
 
   // close options menu when opening other dropdown links
-  $('.icon-chat-2,.icon-notifications').closest('button').on('click', function(e) {
-    $('.enhanced-options-modal').addClass('hidden')
-  })
-  $('.header-user-menu .dropdown-link,.tokens-menu .dropdown-link').on('click', function(e) {
-    $('.enhanced-options-modal').addClass('hidden')
-  })
+  // $('.icon-chat-2,.icon-notifications').closest('button').on('click', (e) => {
+  //   $('.enhanced-options-modal,.blurred-login-overlay').addClass('hidden')
+  // })
+  // $('.header-user-menu .dropdown-link,.tokens-menu .dropdown-link').on('click', function(e) {
+  //   $('.enhanced-options-modal').addClass('hidden')
+  // })
 
   // options change handler
   $('.enhanced-options-content').on('change', 'input[type="checkbox"]', function(e) {
@@ -118,29 +114,6 @@ function processOption(name, val) {
 
 function processOptions() {
 
-}
-
-
-/*
-  * Display website time in website's header
-  */
-var time = $.ajax({async: false}).getResponseHeader('Date')
-var timeFormat = { hour: '2-digit', minute: '2-digit', second: '2-digit' }
-function updateTime() {
-
-  if(!$('.personal-notifications-modal-panel .current-time').length) {
-    $('.personal-notifications-modal-panel').prepend('<small class="current-time">'+new Date().toLocaleTimeString('en-US', timeFormat)+'</small>')
-  } else {
-    let currentTime = parseTime($('.personal-notifications-modal-panel .current-time').text())
-    $('.personal-notifications-modal-panel .current-time').html(currentTime)
-  }
-}
-function parseTime( t ) {
-    var d = new Date();
-    var time = t.match( /(\d+)(?::(\d\d))(?::(\d\d))?\s*(p?)/ );
-    d.setHours( parseInt( time[1]) + (time[3] ? 12 : 0) );
-    d.setMinutes( parseInt( time[2]) || 0 );
-    return d.toLocaleTimeString('en-US', timeFormat);
 }
 
 
@@ -215,31 +188,31 @@ function addMessageTemplates(el) {
 /**
  * Message Translation
  */
-waitForKeyElements(".messages", hideChatUsers, false);
-function hideChatUsers(jNode) {
+waitForKeyElements(".message-list", hideChatUsers, false);
+function hideChatUsers(el) {
 
   // observe messages div
   var observer = new MutationObserver(function(e) {
 
       // add translation button to regular messages
-      $(jNode).find('.regular-message.message__more-menu--hidden:not(.se-processed)').slice(-50).each(function(index, item) {
-          if(!$(this).find('.message-body .translate-line').length) {
-            $(this).find('.message-body').append(htmlTranslateButton)
-            $(this).addClass("se-processed")
-          }
+      $(el).find('[data-testid="chat-message"]:not(.se-processed)').slice(-50).each(function(index, item) {
+        if(!$(this).find('.translate-line').length) {
+          $(this).find('.msg-text').append(htmlTranslateButton)
+          $(this).addClass("se-processed")
+        }
       })
 
       // auto translate
       if($('.switch-auto-translate input[type="checkbox"]').is(':checked')) {
-        $(jNode).find('.regular-message.message__more-menu--hidden:not(.se-hidden):not(.se-translated)').slice(-1).each(function(index, item) {
+        $(el).find('[data-testid="chat-message"]:not(.se-hidden):not(.se-translated)').slice(-1).each(function(index, item) {
           let that = $(this)
-          let ell = $(this).find('.message-body').clone()
-          ell.find('.username,.message-body-mention,.message-timestamp,>span,button,.goal-block,.group-show-message-title,.group-show-announce-topic-label,.group-show-announce-controls').remove()
+          let ell = $(this).find('.msg-text').clone()
+          ell.find('.defaultUser').remove()
           let text = ell.text().trim()
 
           translateGoogle(text, 'en_US', $('.model-chat-content')).then(function(data) {
-            if(!that.find('.message-body').find('.translated-line').length) {
-                that.find('.message-body').find('.translate-line').before('<small class="translated-line">'+decodeHtml(data.data.translations[0].translatedText)+'</small>')
+            if(!that.find('.msg-text').find('.translated-line').length) {
+              that.find('.msg-text').find('.translate-line').before('<small class="translated-line">'+decodeHtml(data.data.translations[0].translatedText)+'</small>')
             }
           })
 
@@ -247,20 +220,20 @@ function hideChatUsers(jNode) {
         })
       }
   });
-  observer.observe($('.messages')[0], {characterData: true, childList: true, subtree: true});
+  observer.observe($('.message-list')[0], {characterData: true, childList: true, subtree: true});
 
 
   // translate button click handler
-  $('.messages').off().on('click', '.translate-line button', function(e) {
-      let ell = $(this).closest('.message-body').clone()
-      ell.find('.username,.message-body-mention,.message-timestamp,>span,button,.goal-block,.group-show-message-title,.group-show-announce-topic-label,.group-show-announce-controls').remove()
+  $('.message-list').off().on('click', '.translate-line button', function(e) {
+      let ell = $(this).closest('.msg-text').clone()
+      ell.find('.defaultUser').remove()
       let text = ell.text().trim()
       let that = $(this)
       $(this).prop('disabled', true)
 
       translateGoogle(text, 'en_US', $('.model-chat-content')).then(function(data) {
-        if(!that.closest('.message-body').find('.translated-line').length) {
-            that.closest('.message-body').find('.translate-line').before('<small class="translated-line">'+decodeHtml(data.data.translations[0].translatedText)+'</small>')
+        if(!that.closest('.msg-text').find('.translated-line').length) {
+            that.closest('.translate-line').before('<small class="translated-line">'+decodeHtml(data.data.translations[0].translatedText)+'</small>')
         }
         $(this).prop('disabled', false)
       })
@@ -457,7 +430,7 @@ function addLangDropdown(jNode) {
                 });
             } else {
                 // no translation needed
-                modelChatSubmit.click()
+                $('.BaseTabsContainer .SendButton').click()
             }
             $('.se-loader-line').remove()
         }

@@ -10,7 +10,9 @@ button + .se-loader { display: none; }
 .enhanced-options-content label { text-align: left; }
 .enhanced-options-content .switcher.on .switcher-wrapper { transform: translateX(17px); }
 .enhanced-options-content .switcher .switcher-wrapper { transform: translateX(0); }
-  
+.enhanced-options-modal { height: auto; width: 364px; position: fixed; overflow: hidden; -webkit-tap-highlight-color: transparent; z-index: 1101; display: block; font-size: 12px; margin: auto; box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px; background: white; border: 3px solid rgb(14, 108, 146); border-radius: 10px; visibility: visible; left: 623.5px; top: 42px; }
+
+
 /* language picker */
 .se-langpicker { position: absolute; top: 6px; left: 2px; z-index: 1; opacity: .6; cursor: pointer; text-align: center; width: 24px; height: 24px; margin-left: 0 !important; margin-right: 8px !important; }
 .se-langpicker:hover { opacity: 1; }
@@ -37,11 +39,14 @@ button + .se-loader { display: none; }
 .input.language-search:hover { background: rgba(0,0,0,1) }
 
 /* translate chat */
+.msg-text .translate-line button { display: inline; }
+.msg-text .translate-line { visibility: hidden; }
+.msg-text:hover .translate-line { visibility: visible; }
+.chat-message-translate-button { background: none; border: 0; outline: 0; cursor: pointer; }
+.chat-message-translate-button * { fill: rgba(255,255,255,.6); }
+.chat-message-translate-button:hover * { fill: #fff; }
+.translated-line { padding-left: 7px; font-size: 95%; color: #dcdcdc; }
 .translated-line + .translate-line { visibility: hidden !important; pointer-events: none; }
-.message-body .translate-line button { display: inline; }
-.translated-line { padding-left: 7px; }
-.message-body .translate-line { visibility: hidden; }
-.message-body:hover .translate-line { visibility: visible; }
 
 /* translate Private Messsages */
 .messenger-chat .language-search { max-width: 140px; }
