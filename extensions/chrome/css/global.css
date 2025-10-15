@@ -28,7 +28,7 @@ button + .se-loader { display: none; }
 .se-langpicker[data-active=""] + .chat-input-form .customInput.chat-input-field, .se-langpicker[data-active=""] + .chat-input-form .inputFieldChatPlaceholder::before { padding-left: 15px }
 
 /* language chooser */
-.language-chooser { background: #17202a; bottom: 33px; right: 0; left: 0; max-height: 80%; position: absolute; z-index: 2; overflow: hidden }
+.language-chooser { background: #17202a; bottom: 33px; right: 0; left: 0; height: 40%; position: absolute; z-index: 2; overflow: hidden }
 .language-chooser > div { height: 275px }
 .language-chooser .title-block { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 5px 10px; }
 .language-chooser .title-block h3 { color: #fff; font-size: 14px; font-weight: 400; margin: 0; }
@@ -82,7 +82,7 @@ button + .se-loader { display: none; }
 .btn.se-pip, .btn.se-pip:active { position: absolute; right: 24px; top: 60px; }
 
 /* Message templates */
-.se-message-templates { background: #17202a; border-radius: 8px 8px 0 0; padding: 16px 16px 8px; bottom: 33px; right: 0; left: 0; max-height: 80%; position: absolute; z-index: 2; overflow: hidden }
+.se-message-templates { background: #17202a; border-radius: 8px 8px 0 0; padding: 16px 16px 8px; bottom: 33px; right: 0; left: 0; height: 40%; position: absolute; z-index: 2; overflow: hidden }
 .se-message-templates .title-block { display: flex; }
 .se-message-templates .title-block .search { flex: 1; }
 .se-message-templates-btn { background: none; border: 0; outline: 0; cursor: pointer; margin-right: 2px; }
@@ -98,6 +98,9 @@ button + .se-loader { display: none; }
 .se-add-message { cursor: pointer; }
 .se-add-message .icon-add { width: 30px; height: 30px; fill: #141414; }
 .se-add-message:hover .icon-add { fill: #000; }
+
+/* minor fixes */
+#sendTipButton { max-width: auto !important; }
 
 /* keyframes */
 @keyframes rotate {
