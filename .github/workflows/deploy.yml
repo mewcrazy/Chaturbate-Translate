@@ -45,7 +45,7 @@ jobs:
           git add extensions/chrome/js/waitForKeyElements.min.js
           git add extensions/chrome/js/jquery.min.js
           git commit -am "Update repository files [skip ci]" 
-          git tag -d main
+          #git tag -d main
           git push -f origin main
 
       # Step 5: Push

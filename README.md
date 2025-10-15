@@ -26,11 +26,11 @@
 # Installation
 Simply install the extension for your preferred browser:
 
-<!--<p width="100%">
+<p width="100%">
     <a href="https://github.com/mewcrazy/Stripchat-Translate/raw/refs/heads/main/extensions/chrome.crx"><img width="206" src="https://github.com/mewcrazy/Stripchat-Translate/raw/main/img/get-it-for-chrome.png"></a>
     <a href="https://github.com/mewcrazy/Stripchat-Translate/raw/refs/heads/main/extensions/firefox.zip"><img width="206" src="https://github.com/mewcrazy/Stripchat-Translate/raw/main/img/get-it-for-firefox.png"></a>
     <a href="https://github.com/mewcrazy/Stripchat-Translate/raw/refs/heads/main/extensions/opera.crx"><img width="206" src="https://github.com/mewcrazy/Stripchat-Translate/raw/main/img/get-it-for-opera.png"></a>
-</p>-->
+</p>
 
 Please note that this script requires an API Key for the Google Cloud Translation API. Simply log in your Google account, and create a New Project for the Cloud Translation API. After you can click on "Login Credentials" and create a new API Key which you can use in this script.
 
