@@ -54,10 +54,12 @@ jobs:
           force: true
 
       # Step 6: Insert version numbers into Chrome Extension
-      - name: Remove Google API Key from codebase
+      - name: Insert version numbers into Chrome Extension
         id: insert_version_numbers
-        run: sed -i -e 's/version=''/version='$tag'/g' extensions/chrome/foreground.js
-
+        run: |
+          sed -i -e 's/version=''/version='$tag'/g' extensions/chrome/updates.xml
+          sed -i -e 's/"version": "0.0.2"/"version": "$tag"/g' extensions/chrome/updates.xml
+        
       # Step 7: Release pushed tag
       - name: Create release
         env:
