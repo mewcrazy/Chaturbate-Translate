@@ -53,6 +53,9 @@ button + .se-loader { display: none; }
 .chat-message-translate-button:hover * { fill: #fff; }
 .translated-line { padding-left: 7px; font-size: 95%; color: #dcdcdc; }
 .translated-line + .translate-line { visibility: hidden !important; pointer-events: none; }
+#FVChatTabContents .chat-input-div { top: 11px; }
+#FVChatTabContents .chat-input-div { position: relative; }
+#FVChatTabContents .se-langpicker { top: 9px; }
 
 /* translate Private Messsages */
 .messenger-chat .language-search { max-width: 140px; }

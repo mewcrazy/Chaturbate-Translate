@@ -364,7 +364,7 @@ function openPip(elem) {
 /**
  * Add language/translation dropdown to main chat
  */
-waitForKeyElements("#ChatTabContainer .chat-input-form", addLangDropdown, false);
+waitForKeyElements(".chat-input-form", addLangDropdown, false);
 function addLangDropdown(jNode) {
     let modelChat = $(jNode).closest('.ChatTabContents')
     let modelChatInput = $(jNode).find('.customInput.chat-input-field')
@@ -437,20 +437,27 @@ function addLangDropdown(jNode) {
 
     // click language button
     $('.se-langpicker').off().on('click', function(e) {
-        if(!$('.msg-list-wrapper-split .language-chooser').length) {
-          $('.msg-list-wrapper-split').append(htmlLangChooser);
 
-          // add all languages
-          populateLanguageDropdowns()
-          
-          // close language chooser
-          $('.language-chooser').on('click', '.close', function(e) {
-            $('.language-chooser').addClass("hidden")
-          })
-          
-        } else {
-          $('.msg-list-wrapper-split .language-chooser').toggleClass('hidden')
-        }
+      // split screen
+      if(!$('.msg-list-wrapper-split .language-chooser').length) {
+        $('.msg-list-wrapper-split').append(htmlLangChooser);
+      } else {
+        $('.msg-list-wrapper-split .language-chooser').toggleClass('hidden')
+      }
+      // full screen
+      if(!$('.msg-list-wrapper-fvm .language-chooser').length) {
+        $('.msg-list-wrapper-fvm').append(htmlLangChooser);
+      } else {
+        $('.msg-list-wrapper-fvm .language-chooser').toggleClass('hidden')
+      }
+      
+      // add all languages
+      populateLanguageDropdowns()
+      
+      // close language chooser
+      $('.language-chooser').on('click', '.close', function(e) {
+        $('.language-chooser').addClass("hidden")
+      })
     })
 
     // reset language on right click
