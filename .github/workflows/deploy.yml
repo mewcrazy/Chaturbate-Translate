@@ -41,9 +41,8 @@ jobs:
           git fetch
           git add extensions/chrome/js/waitForKeyElements.min.js
           git add extensions/chrome/js/jquery.min.js
-          git commit -am "Update repository files [skip ci]" 
-          #git tag -d main
-          git push -f origin main
+          git commit -am "Update repository files [skip ci]"
+          git push -f origin ${{ github.ref }}
 
       # Step 5: Push
       - name: Push to GitHub
