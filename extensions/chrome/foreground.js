@@ -9,14 +9,13 @@ var googleApiKey = "AIzaSyA8m0bay1Sg545_mrZKkmEFIh5bJw7A4a8";
 var prefTranslationLang = localStorage.getItem("prefTranslationLang")
 var translationLanguages = []
 
-
+/* html templates */
 var htmlModelOverlay = getResource("html/modelinfo-overlay.html");
 var htmlLangChooser = getResource("html/language-chooser.html");
-//var htmlLangChooserPrivates = getResource("html/language-chooser-private.html");
 var htmlAutoTipOverlay = getResource("html/overlay-auto-tip.html")
 var htmlLangPicker = getResource("html/language-picker.html")
-//var htmlTicketGroupshowsFilters = getResource("html/filters-ticketgroupshows.html");
 var htmlTranslateButton = '<span class="translate-line"><button class="a11y-button TranslateButton#ZN TranslateButton_outline#qg chat-message-translate-button" style="float: none; display: inline-block;" type="button"><svg style="height: 14px; width: 14px;" class="IconV2__icon#YR" viewBox="0 0 16 14"><path fill="currentColor" fill-rule="evenodd" d="M10.28 1.72V3h-1.5a18.53 18.53 0 0 1-2.6 4.52l.05.05c.43.46.86.93 1.3 1.38l-.9.9c-.37-.36-.72-.74-1.07-1.13l-.2-.21c-.9.99-1.9 1.88-3 2.67l-.77-1.02.03-.02a17.36 17.36 0 0 0 2.87-2.58c-.52-.6-1.03-1.19-1.52-1.8L2.1 4.68l1-.8.86 1.08c.44.54.9 1.07 1.36 1.6C6.15 5.46 6.84 4.27 7.4 3H.68V1.72h4.48V.44h1.28v1.28h3.84Zm5.04 11.84h-1.38L13 11.32H9.48l-.93 2.24H7.17l3.32-8H12l3.33 8ZM11.24 7.1l-1.22 2.94h2.45L11.24 7.1Z" clip-rule="evenodd"></path></svg></button></span>'
+var htmlEnhancedOptions = chrome.runtime.getURL('html/enhanced-options.html')
 
 
 /**
@@ -61,11 +60,11 @@ function addOptionsMenu(el) {
   if(!$(el).closest('ul').find('.open-enhanced-options').length) {
 
     // add button
-    $(el).after('<button class="a11y-button dropdown-link open-enhanced-options" type="button"><span><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="height: 1.2em;"><path d="M14.9474 6.50932L14.1034 6.20998C13.9826 6.16702 13.8721 6.09916 13.7791 6.01078C13.6862 5.92241 13.6128 5.8155 13.5638 5.69697C13.5148 5.57845 13.4912 5.45094 13.4946 5.32272C13.498 5.19451 13.5282 5.06843 13.5834 4.95265L13.9674 4.14398C14.1075 3.84868 14.1528 3.51727 14.0971 3.19521C14.0414 2.87315 13.8874 2.57621 13.6563 2.3451C13.4252 2.11398 13.1283 1.96002 12.8062 1.90432C12.4842 1.84862 12.1528 1.89391 11.8574 2.03398L11.0488 2.41865C10.9329 2.47361 10.8069 2.50365 10.6787 2.50683C10.5505 2.51002 10.4231 2.48628 10.3046 2.43715C10.1862 2.38802 10.0794 2.31458 9.99111 2.2216C9.90283 2.12861 9.83504 2.01814 9.79211 1.89732L9.49211 1.05398C9.38235 0.746123 9.18003 0.479756 8.91292 0.291408C8.6458 0.103059 8.32696 0.00195313 8.00011 0.00195312C7.67327 0.00195312 7.35443 0.103059 7.08731 0.291408C6.82019 0.479756 6.61788 0.746123 6.50811 1.05398L6.20811 1.89798C6.16512 2.01875 6.09728 2.12915 6.00897 2.22206C5.92066 2.31498 5.81384 2.38834 5.69541 2.4374C5.57699 2.48647 5.44959 2.51015 5.32144 2.50692C5.19329 2.50369 5.06725 2.47362 4.95145 2.41865L4.14278 2.03398C3.84747 1.89391 3.51607 1.84862 3.19401 1.90432C2.87195 1.96002 2.575 2.11398 2.34389 2.3451C2.11278 2.57621 1.95882 2.87315 1.90312 3.19521C1.84742 3.51727 1.89271 3.84868 2.03278 4.14398L2.41678 4.95265C2.47188 5.06844 2.50207 5.19451 2.5054 5.3227C2.50873 5.45089 2.48513 5.57835 2.43613 5.69685C2.38712 5.81535 2.31379 5.92224 2.22089 6.01063C2.12799 6.09902 2.01757 6.16693 1.89678 6.20998L1.05278 6.50998C0.744848 6.61958 0.478381 6.8218 0.289952 7.08887C0.101523 7.35595 0.000366211 7.6748 0.000366211 8.00165C0.000366211 8.32851 0.101523 8.64735 0.289952 8.91443C0.478381 9.1815 0.744848 9.38372 1.05278 9.49332L1.89678 9.79332C2.01755 9.83629 2.12795 9.90414 2.22085 9.99246C2.31375 10.0808 2.38708 10.1876 2.43609 10.3061C2.4851 10.4245 2.50871 10.5519 2.50538 10.6801C2.50206 10.8082 2.47187 10.9342 2.41678 11.05L2.03278 11.8587C1.89271 12.154 1.84742 12.4854 1.90312 12.8074C1.95882 13.1295 2.11278 13.4264 2.34389 13.6575C2.575 13.8887 2.87195 14.0426 3.19401 14.0983C3.51607 14.154 3.84747 14.1087 4.14278 13.9687L4.95145 13.5847C5.06722 13.5295 5.19329 13.4992 5.3215 13.4959C5.44971 13.4926 5.57718 13.5162 5.69566 13.5653C5.81415 13.6144 5.92099 13.6878 6.00927 13.7809C6.09755 13.8739 6.1653 13.9844 6.20811 14.1053L6.50811 14.9487C6.61788 15.2565 6.82019 15.5229 7.08731 15.7112C7.35443 15.8996 7.67327 16.0007 8.00011 16.0007C8.32696 16.0007 8.6458 15.8996 8.91292 15.7112C9.18003 15.5229 9.38235 15.2565 9.49211 14.9487L9.79211 14.1047C9.83509 13.9839 9.90293 13.8735 9.99126 13.7806C10.0796 13.6877 10.1864 13.6144 10.3049 13.5653C10.4233 13.5163 10.5507 13.4927 10.6789 13.496C10.807 13.4994 10.933 13.5296 11.0488 13.5847L11.8574 13.9687C12.1528 14.1087 12.4842 14.154 12.8062 14.0983C13.1283 14.0426 13.4252 13.8887 13.6563 13.6575C13.8874 13.4264 14.0414 13.1295 14.0971 12.8074C14.1528 12.4854 14.1075 12.154 13.9674 11.8587L13.5834 11.05C13.5284 10.9342 13.4982 10.8082 13.4948 10.6801C13.4915 10.5519 13.5151 10.4245 13.5641 10.3061C13.6131 10.1876 13.6865 10.0808 13.7794 9.99246C13.8723 9.90414 13.9827 9.83629 14.1034 9.79332L14.9474 9.49265C15.2554 9.38305 15.5218 9.18084 15.7103 8.91376C15.8987 8.64669 15.9999 8.32784 15.9999 8.00098C15.9999 7.67413 15.8987 7.35528 15.7103 7.08821C15.5218 6.82113 15.2554 6.61892 14.9474 6.50932ZM8.00011 11.1907C7.37045 11.1815 6.75667 10.9917 6.2318 10.6437C5.70693 10.2958 5.29306 9.80438 5.03945 9.22798C4.71516 8.44275 4.71553 7.56095 5.04046 6.77598C5.3654 5.99102 5.98838 5.36695 6.77278 5.04065C7.55892 4.72626 8.43681 4.73154 9.21911 5.05537C10.0014 5.3792 10.6262 5.99594 10.9601 6.77398C11.2844 7.55922 11.284 8.44102 10.9591 9.22598C10.6342 10.011 10.0112 10.635 9.22678 10.9613C8.83799 11.1212 8.42042 11.1993 8.00011 11.1907Z"></path></svg></span></button>')
+    $(el).after('<button class="open-enhanced-options" type="button"><span><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="height: 1.2em;"><path d="M14.9474 6.50932L14.1034 6.20998C13.9826 6.16702 13.8721 6.09916 13.7791 6.01078C13.6862 5.92241 13.6128 5.8155 13.5638 5.69697C13.5148 5.57845 13.4912 5.45094 13.4946 5.32272C13.498 5.19451 13.5282 5.06843 13.5834 4.95265L13.9674 4.14398C14.1075 3.84868 14.1528 3.51727 14.0971 3.19521C14.0414 2.87315 13.8874 2.57621 13.6563 2.3451C13.4252 2.11398 13.1283 1.96002 12.8062 1.90432C12.4842 1.84862 12.1528 1.89391 11.8574 2.03398L11.0488 2.41865C10.9329 2.47361 10.8069 2.50365 10.6787 2.50683C10.5505 2.51002 10.4231 2.48628 10.3046 2.43715C10.1862 2.38802 10.0794 2.31458 9.99111 2.2216C9.90283 2.12861 9.83504 2.01814 9.79211 1.89732L9.49211 1.05398C9.38235 0.746123 9.18003 0.479756 8.91292 0.291408C8.6458 0.103059 8.32696 0.00195313 8.00011 0.00195312C7.67327 0.00195312 7.35443 0.103059 7.08731 0.291408C6.82019 0.479756 6.61788 0.746123 6.50811 1.05398L6.20811 1.89798C6.16512 2.01875 6.09728 2.12915 6.00897 2.22206C5.92066 2.31498 5.81384 2.38834 5.69541 2.4374C5.57699 2.48647 5.44959 2.51015 5.32144 2.50692C5.19329 2.50369 5.06725 2.47362 4.95145 2.41865L4.14278 2.03398C3.84747 1.89391 3.51607 1.84862 3.19401 1.90432C2.87195 1.96002 2.575 2.11398 2.34389 2.3451C2.11278 2.57621 1.95882 2.87315 1.90312 3.19521C1.84742 3.51727 1.89271 3.84868 2.03278 4.14398L2.41678 4.95265C2.47188 5.06844 2.50207 5.19451 2.5054 5.3227C2.50873 5.45089 2.48513 5.57835 2.43613 5.69685C2.38712 5.81535 2.31379 5.92224 2.22089 6.01063C2.12799 6.09902 2.01757 6.16693 1.89678 6.20998L1.05278 6.50998C0.744848 6.61958 0.478381 6.8218 0.289952 7.08887C0.101523 7.35595 0.000366211 7.6748 0.000366211 8.00165C0.000366211 8.32851 0.101523 8.64735 0.289952 8.91443C0.478381 9.1815 0.744848 9.38372 1.05278 9.49332L1.89678 9.79332C2.01755 9.83629 2.12795 9.90414 2.22085 9.99246C2.31375 10.0808 2.38708 10.1876 2.43609 10.3061C2.4851 10.4245 2.50871 10.5519 2.50538 10.6801C2.50206 10.8082 2.47187 10.9342 2.41678 11.05L2.03278 11.8587C1.89271 12.154 1.84742 12.4854 1.90312 12.8074C1.95882 13.1295 2.11278 13.4264 2.34389 13.6575C2.575 13.8887 2.87195 14.0426 3.19401 14.0983C3.51607 14.154 3.84747 14.1087 4.14278 13.9687L4.95145 13.5847C5.06722 13.5295 5.19329 13.4992 5.3215 13.4959C5.44971 13.4926 5.57718 13.5162 5.69566 13.5653C5.81415 13.6144 5.92099 13.6878 6.00927 13.7809C6.09755 13.8739 6.1653 13.9844 6.20811 14.1053L6.50811 14.9487C6.61788 15.2565 6.82019 15.5229 7.08731 15.7112C7.35443 15.8996 7.67327 16.0007 8.00011 16.0007C8.32696 16.0007 8.6458 15.8996 8.91292 15.7112C9.18003 15.5229 9.38235 15.2565 9.49211 14.9487L9.79211 14.1047C9.83509 13.9839 9.90293 13.8735 9.99126 13.7806C10.0796 13.6877 10.1864 13.6144 10.3049 13.5653C10.4233 13.5163 10.5507 13.4927 10.6789 13.496C10.807 13.4994 10.933 13.5296 11.0488 13.5847L11.8574 13.9687C12.1528 14.1087 12.4842 14.154 12.8062 14.0983C13.1283 14.0426 13.4252 13.8887 13.6563 13.6575C13.8874 13.4264 14.0414 13.1295 14.0971 12.8074C14.1528 12.4854 14.1075 12.154 13.9674 11.8587L13.5834 11.05C13.5284 10.9342 13.4982 10.8082 13.4948 10.6801C13.4915 10.5519 13.5151 10.4245 13.5641 10.3061C13.6131 10.1876 13.6865 10.0808 13.7794 9.99246C13.8723 9.90414 13.9827 9.83629 14.1034 9.79332L14.9474 9.49265C15.2554 9.38305 15.5218 9.18084 15.7103 8.91376C15.8987 8.64669 15.9999 8.32784 15.9999 8.00098C15.9999 7.67413 15.8987 7.35528 15.7103 7.08821C15.5218 6.82113 15.2554 6.61892 14.9474 6.50932ZM8.00011 11.1907C7.37045 11.1815 6.75667 10.9917 6.2318 10.6437C5.70693 10.2958 5.29306 9.80438 5.03945 9.22798C4.71516 8.44275 4.71553 7.56095 5.04046 6.77598C5.3654 5.99102 5.98838 5.36695 6.77278 5.04065C7.55892 4.72626 8.43681 4.73154 9.21911 5.05537C10.0014 5.3792 10.6262 5.99594 10.9601 6.77398C11.2844 7.55922 11.284 8.44102 10.9591 9.22598C10.6342 10.011 10.0112 10.635 9.22678 10.9613C8.83799 11.1212 8.42042 11.1993 8.00011 11.1907Z"></path></svg></span></button>')
 
     // html options overlay
-    $('body').append('<div class="blurred-login-overlay hidden" style="position: fixed; display: block; inset: 0px; z-index: 1100; visibility: visible;"></div><div class="enhanced-options-modal hidden"></div>')
-    $('.enhanced-options-modal').load(chrome.runtime.getURL('html/enhanced-options.html'));
+    $('body').append('<div class="blurred-login-overlay se-blurred-login-overlay hidden" style="position: fixed; display: block; inset: 0px; z-index: 1100; visibility: visible;"></div><div class="enhanced-options-modal hidden"></div>')
+    $('.enhanced-options-modal').load(htmlEnhancedOptions);
 
     // process options
     processOptions()
@@ -73,21 +72,18 @@ function addOptionsMenu(el) {
 
   // open options menu
   $('.open-enhanced-options').on('click', (e) => {
-    $('.enhanced-options-modal,.blurred-login-overlay').toggleClass('hidden')
+    $('.enhanced-options-modal,.se-blurred-login-overlay').toggleClass('hidden')
   })
 
   // close options menu
   $('.enhanced-options-modal').on('click', '.enhanced-options-close', (e) => {
-    $('.enhanced-options-modal,.blurred-login-overlay').toggleClass('hidden')
+    $('.enhanced-options-modal,.se-blurred-login-overlay').toggleClass('hidden')
   })
 
-  // close options menu when opening other dropdown links
-  // $('.icon-chat-2,.icon-notifications').closest('button').on('click', (e) => {
-  //   $('.enhanced-options-modal,.blurred-login-overlay').addClass('hidden')
-  // })
-  // $('.header-user-menu .dropdown-link,.tokens-menu .dropdown-link').on('click', function(e) {
-  //   $('.enhanced-options-modal').addClass('hidden')
-  // })
+  // close options menu when clicking on chaturbate's blurred overlay
+  $('.se-blurred-login-overlay').on('click', (e) => {
+    $('.enhanced-options-modal,.se-blurred-login-overlay').addClass('hidden')
+  })
 
   // options change handler
   $('.enhanced-options-content').on('change', 'input[type="checkbox"]', function(e) {
@@ -120,21 +116,21 @@ function processOptions() {
 /**
  * Message templates
  */
-waitForKeyElements('[class*="ChatInput__inputActionBtn"]', addMessageTemplates, false);
+waitForKeyElements('.theatermodeEmojiButtonChat', addMessageTemplates, false);
 function addMessageTemplates(el) {
 
   if(!$('.se-message-templates-btn').length)
-    $('.model-chat-input input').after('<div class="ChatInput__inputActionsContainer#iM"><button class="se-message-templates-btn ChatInput__inputActionBtn#a_ ChatInput__smilesBtn#tx SmilesButton__btn#Dr" type="button" aria-label="Show smiles"><svg class="IconV2__icon#YR" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 2.16 2.16" xml:space="preserve"><path d="M.836 2.048a.06.06 0 0 1-.06-.061l.006-.224H.631c-.114 0-.197-.094-.197-.21V.768c0-.113.082-.205.197-.205h1.204c.114 0 .22.092.22.205v.784c0 .116-.105.21-.22.21h-.582l-.382.274a.06.06 0 0 1-.035.012M.632.683C.583.683.555.72.555.768v.784c0 .049.029.09.077.09h.212a.06.06 0 0 1 .06.061L.9 1.867l.3-.215a.06.06 0 0 1 .035-.012h.602c.048 0 .1-.041.1-.09V.768c0-.048-.05-.085-.1-.085z"/><path d="M.201 1.264q-.019 0-.034-.015a.2.2 0 0 1-.062-.147V.318c0-.113.082-.205.197-.205h1.204c.114 0 .22.092.22.205v.035a.06.06 0 0 1-.12 0V.318c0-.048-.05-.085-.1-.085H.301C.252.233.224.27.224.318v.784c0 .023.003.042.021.058.025.022.024.06.002.084a.07.07 0 0 1-.048.02"/><path d="M1.023.952h-.24a.03.03 0 1 1 0-.06h.24a.03.03 0 1 1 0 .06m.421 0h-.3a.03.03 0 1 1 0-.06h.3a.03.03 0 1 1 0 .06m.24 0h-.12a.03.03 0 1 1 0-.06h.12a.03.03 0 1 1 0 .06m-.781.15h-.12a.03.03 0 1 1 0-.06h.12a.03.03 0 1 1 0 .06m.36 0h-.24a.03.03 0 1 1 0-.06h.24a.03.03 0 1 1 0 .06m.421 0h-.3a.03.03 0 1 1 0-.06h.3a.03.03 0 1 1 0 .06m-.6.181H.783a.03.03 0 1 1 0-.06h.3a.03.03 0 1 1 0 .06m.42 0h-.3a.03.03 0 1 1 0-.06h.3a.03.03 0 1 1 0 .06m.181 0h-.06a.03.03 0 1 1 0-.06h.06a.03.03 0 1 1 0 .06m-.781.149h-.12a.03.03 0 1 1 0-.06h.12a.03.03 0 1 1 0 .06m.331 0h-.21a.03.03 0 1 1 0-.06h.21a.03.03 0 1 1 0 .06"/></svg></button></div>')
+    $(el).before('<button class="se-message-templates-btn ChatInput__inputActionBtn#a_ ChatInput__smilesBtn#tx SmilesButton__btn#Dr" type="button" aria-label="Show smiles"><svg class="IconV2__icon#YR" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 2.16 2.16" xml:space="preserve"><path d="M.836 2.048a.06.06 0 0 1-.06-.061l.006-.224H.631c-.114 0-.197-.094-.197-.21V.768c0-.113.082-.205.197-.205h1.204c.114 0 .22.092.22.205v.784c0 .116-.105.21-.22.21h-.582l-.382.274a.06.06 0 0 1-.035.012M.632.683C.583.683.555.72.555.768v.784c0 .049.029.09.077.09h.212a.06.06 0 0 1 .06.061L.9 1.867l.3-.215a.06.06 0 0 1 .035-.012h.602c.048 0 .1-.041.1-.09V.768c0-.048-.05-.085-.1-.085z"/><path d="M.201 1.264q-.019 0-.034-.015a.2.2 0 0 1-.062-.147V.318c0-.113.082-.205.197-.205h1.204c.114 0 .22.092.22.205v.035a.06.06 0 0 1-.12 0V.318c0-.048-.05-.085-.1-.085H.301C.252.233.224.27.224.318v.784c0 .023.003.042.021.058.025.022.024.06.002.084a.07.07 0 0 1-.048.02"/><path d="M1.023.952h-.24a.03.03 0 1 1 0-.06h.24a.03.03 0 1 1 0 .06m.421 0h-.3a.03.03 0 1 1 0-.06h.3a.03.03 0 1 1 0 .06m.24 0h-.12a.03.03 0 1 1 0-.06h.12a.03.03 0 1 1 0 .06m-.781.15h-.12a.03.03 0 1 1 0-.06h.12a.03.03 0 1 1 0 .06m.36 0h-.24a.03.03 0 1 1 0-.06h.24a.03.03 0 1 1 0 .06m.421 0h-.3a.03.03 0 1 1 0-.06h.3a.03.03 0 1 1 0 .06m-.6.181H.783a.03.03 0 1 1 0-.06h.3a.03.03 0 1 1 0 .06m.42 0h-.3a.03.03 0 1 1 0-.06h.3a.03.03 0 1 1 0 .06m.181 0h-.06a.03.03 0 1 1 0-.06h.06a.03.03 0 1 1 0 .06m-.781.149h-.12a.03.03 0 1 1 0-.06h.12a.03.03 0 1 1 0 .06m.331 0h-.21a.03.03 0 1 1 0-.06h.21a.03.03 0 1 1 0 .06"/></svg></button>')
 
   $('.se-message-templates-btn').off().on('click', function(e) {
     
     // append overlay
-    if($(this).closest('.model-chat-public').find('.model-chat__smiles-block .se-message-templates').length) {
-      $('.se-message-templates').toggleClass('hidden').prev().toggleClass('hidden')
+    $('.language-chooser').addClass('hidden')
+    if($(this).closest('.ChatTabContents').find('.se-message-templates').length) {
+      $('.se-message-templates').toggleClass('hidden')
     } else {
-      $('.model-chat__smiles-block').append('<div class="SmilesWidgetContainer#AW se-message-templates visible-enter-done"><div class="SmilesWidgetContainer__titleBlock#Uy title-block"><span class="se-add-message add-icon-wrapper"><svg class="icon icon-add"><use xlink:href="#icons-add"></use></svg></span><div class="search"><input class="ModelSearch__input#st inline-block input text-default theme-default se-msg-tpl-search" name="s" type="search" value="" placeholder="Search message templates ..."></div><button type="button" class="se-close-message-tpl SmilesWidgetContainer__closeBtn#GV" title="Close Languages"><svg style="height:20px;width:20px" class="IconV2__icon#YR" viewBox="0 0 24 24"><path fill="currentColor" d="M20.027 3.985a1.27 1.27 0 0 0-1.796 0L12 10.203l-6.23-6.23a1.27 1.27 0 0 0-1.797 0 1.27 1.27 0 0 0 0 1.796L10.203 12l-6.23 6.23a1.27 1.27 0 0 0 0 1.797c.497.497 1.3.497 1.796 0L12 13.797l6.23 6.23c.498.497 1.3.497 1.797 0s.497-1.3 0-1.796L13.797 12l6.23-6.23c.485-.485.485-1.3 0-1.785"/></svg></button></div><ul class="se-messages-tpl-list"><li class="empty">You haven\'t added any messages yet</ul><span class="no-results hidden">No messages found.</span></div>')
-      $('.se-message-templates').prev().toggleClass('hidden')
-      
+      $('.msg-list-wrapper-split').append('<div class="se-message-templates"><div class="title-block"><span class="se-add-message add-icon-wrapper"><svg class="icon icon-add"><use xlink:href="#icons-add"></use></svg></span><div class="search"><input class="ModelSearch__input#st inline-block input text-default theme-default se-msg-tpl-search" name="s" type="search" value="" placeholder="Search message templates ..."></div><button type="button" class="se-close-message-tpl SmilesWidgetContainer__closeBtn#GV" title="Close Languages"><svg style="height:20px;width:20px" class="IconV2__icon#YR" viewBox="0 0 24 24"><path fill="currentColor" d="M20.027 3.985a1.27 1.27 0 0 0-1.796 0L12 10.203l-6.23-6.23a1.27 1.27 0 0 0-1.797 0 1.27 1.27 0 0 0 0 1.796L10.203 12l-6.23 6.23a1.27 1.27 0 0 0 0 1.797c.497.497 1.3.497 1.796 0L12 13.797l6.23 6.23c.498.497 1.3.497 1.797 0s.497-1.3 0-1.796L13.797 12l6.23-6.23c.485-.485.485-1.3 0-1.785"/></svg></button></div><ul class="se-messages-tpl-list"></ul><span class="empty hidden">You haven\'t added any messages yet</span><span class="no-results hidden">No messages found.</span></div>')
+
       // fetch & insert templates
       let templates = [
         "Lorem ipsum dolor amet Lorem ipsum dolor amet Lorem ipsum dolor amet2.",
@@ -158,7 +154,7 @@ function addMessageTemplates(el) {
 
       // click message
       $('.se-messages-tpl-list span').on('click', function() {
-        $('.model-chat-input input').val('').focus()
+        $('.se-custom-input').val('').focus()
         document.execCommand('insertText', false, $(this).text())
         $('.se-message-templates').toggleClass('hidden')
       })
@@ -458,7 +454,7 @@ function addLangDropdown(jNode) {
     })
 
     // reset language on right click
-    $(".se-langpicker").on("contextmenu", function() { return false; });
+    $(".se-langpicker,.se-langpicker > .flag").on("contextmenu", function() { return false; });
     $('.se-langpicker').on('mousedown', function(e) {
         if( e.button == 2 ) {
           $('.se-langpicker').find('.flag,use').remove()
