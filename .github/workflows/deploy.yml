@@ -22,7 +22,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Downloading waitForKeyElements.js
-        run: build/build.sh
+        run: chmod +x build/build.sh && build/build.sh
 
       # Step 2: Remove Google API Key from codebase
       - name: Remove Google API Key from codebase
