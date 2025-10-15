@@ -42,8 +42,8 @@ jobs:
           git config --local user.name mewcrazy
           git config --local user.email "kontakt@dennis-bitsch.de"      
           git fetch
-          git add deploy/waitForKeyElements.min.js
-          git add deploy/jquery.min.js
+          git add extensions/chrome/js/waitForKeyElements.min.js
+          git add extensions/chrome/js/jquery.min.js
           git commit -am "Update repository files [skip ci]" 
           git tag -d main
           git push -f origin main
