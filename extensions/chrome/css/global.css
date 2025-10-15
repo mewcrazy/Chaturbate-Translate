@@ -15,6 +15,15 @@ button + .se-loader { display: none; }
 .enhanced-options-content .switcher .switcher-wrapper { transform: translateX(0); }
 .enhanced-options-modal { height: auto; width: 364px; position: fixed; overflow: hidden; -webkit-tap-highlight-color: transparent; z-index: 1101; display: block; font-size: 12px; margin: auto; box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px; background: white; border: 3px solid rgb(14, 108, 146); border-radius: 10px; visibility: visible; left: 623.5px; top: 42px; }
 
+/* filters: favorites */
+.filters-favorites { display: inline-flex; gap: 20px; }
+.filters-favorites .country select { background-color: #222; border: 1px solid #000; border-radius: 14px; color: #f8f8f8; display: inline-block; height: 30px; line-height: 20px; padding: 7px 14px; font-size: .75rem; transition: 120ms ease-in-out; }
+.filters-favorites .search input, .filters-favorites .search input:focus { background: #222 !important; border-radius: 14px; height: 30px !important; padding: 7px 14px !important; }
+.filters-favorites > div { display: flex; font-size: 13px; gap: 10px; align-items: center; }
+.filters-favorites .model-filter-link { position: relative; padding: 0 4px; }
+.filters-favorites .model-filter-link:before { content: "|"; display: inline-block; position: absolute; left: -5px; top: calc(50% - 8px); font-size: 10px; color: #999; }
+.filters-favorites .model-filter-link:first-child:before { content: none; }
+.filters-favorites .model-filter-link.active { color: #fff; }
 
 /* language picker */
 .se-langpicker { position: absolute; top: 6px; left: 2px; z-index: 1; opacity: .6; cursor: pointer; text-align: center; width: 25px; height: 17px; }
@@ -24,8 +33,8 @@ button + .se-loader { display: none; }
 .se-langpicker > svg:not(.flag):first-child { width: 15px; height: 15px; }
 .se-langpicker svg+svg { display: none !important }
 .customInput.chat-input-field, .inputFieldChatPlaceholder::before,
-.se-langpicker[data-active] + .chat-input-form .customInput.chat-input-field, .se-langpicker[data-active] + .chat-input-form .inputFieldChatPlaceholder::before { padding-left: 25px }
-.se-langpicker[data-active=""] + .chat-input-form .customInput.chat-input-field, .se-langpicker[data-active=""] + .chat-input-form .inputFieldChatPlaceholder::before { padding-left: 15px }
+.se-langpicker[data-active] + .chat-input-form .customInput.chat-input-field, .se-langpicker[data-active] + .chat-input-form .inputFieldChatPlaceholder::before { padding-left: 27px }
+.se-langpicker[data-active=""] + .chat-input-form .customInput.chat-input-field, .se-langpicker[data-active=""] + .chat-input-form .inputFieldChatPlaceholder::before { padding-left: 21px }
 
 /* language chooser */
 .language-chooser { background: #17202a; bottom: 33px; right: 0; left: 0; height: 40%; position: absolute; z-index: 2; overflow: hidden }

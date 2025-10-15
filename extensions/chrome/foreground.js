@@ -678,17 +678,17 @@ function preselectFavoritesPageGrid(el) {
     if(columns) $(el).find('.list-items-container').attr('data-grid', columns)
   }
 }
-waitForKeyElements(".favorites h1.title-ds", addFavoritesFilters, false);
-function addFavoritesFilters() {
+waitForKeyElements(".followed_online_offline", addFavoritesFilters, false);
+function addFavoritesFilters(el) {
 
   // add country filter
-  if(!$('.model-chat .filters-favorites.page-block').length) {
+  if(!$(el).find('.filters-favorites.page-block').length) {
 
     // add filters block html
-    $(".favorites [class^='FavoritesHeaderWithActions__title_wrapper'] > div:first-child").after(getResource('html/favorites-filters.html'))
+    $(el).append(getResource('html/favorites-filters.html'))
 
     // populate country filter
-    $('.model-list-item .country-flag').each(function() {
+    $('.roomCard .thumbnail_flag').each(function() {
       if(!$('select[name="filters[country]"] option[value="'+$(this).attr('title')+'"]').length) $('select[name="filters[country]"]').append('<option value="'+$(this).attr('title')+'">'+$(this).attr('title')+'</option')
     })
   }
