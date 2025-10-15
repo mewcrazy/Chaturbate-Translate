@@ -27,7 +27,7 @@ jobs:
       # Step 2: Remove Google API Key from codebase
       - name: Remove Google API Key from codebase
         id: remove_api_keys
-        run: sed -i -e 's/var googleApiKey = "${{ secrets.GOOGLE_TRANSLATION_APIKEY }}"/var googleApiKey = ""/g' deploy/stripchat-enhanced.user.js
+        run: sed -i -e 's/var googleApiKey = "${{ secrets.GOOGLE_TRANSLATION_APIKEY }}"/var googleApiKey = ""/g' extensions/chrome/foreground.js
 
       # Step 3: Check for any changes
       - name: Check for any changes
@@ -58,15 +58,15 @@ jobs:
           force: true
 
       # Step 6: Release pushed tag
-      # - name: Create release
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     tag: ${{ github.ref_name }}
-      #   run: |
-      #     gh release create "$tag" \
-      #         'extensions/chrome.crx#chrome_extension_${tag#v}.crx' \
-      #         'extensions/firefox.zip#firefox_extension_${tag#v}.zip' \
-      #         'extensions/opera.crx#opera_extension_${tag#v}.crx' \
-      #         --repo="$GITHUB_REPOSITORY" \
-      #         --title="${tag#v}" \
-      #         --generate-notes
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+        run: |
+          gh release create "$tag" \
+              'extensions/chrome.crx#chrome_extension_${tag#v}.crx' \
+              'extensions/firefox.zip#firefox_extension_${tag#v}.zip' \
+              'extensions/opera.crx#opera_extension_${tag#v}.crx' \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${tag#v}" \
+              --generate-notes
