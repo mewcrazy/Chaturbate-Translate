@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-    # Sequence of patterns matched against refs/tags
+      # Sequence of patterns matched against refs/tags
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
   workflow_dispatch:
@@ -57,16 +57,21 @@ jobs:
           branch: ${{ github.ref }}
           force: true
 
-      # Step 6: Release pushed tag
+      # Step 6: Insert version numbers into Chrome Extension
+      - name: Remove Google API Key from codebase
+        id: insert_version_numbers
+        run: sed -i -e 's/version=''/version='$tag'/g' extensions/chrome/foreground.js
+
+      # Step 7: Release pushed tag
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
         run: |
           gh release create "$tag" \
-              'extensions/chrome.crx#chrome_extension_${tag#v}.crx' \
-              'extensions/firefox.zip#firefox_extension_${tag#v}.zip' \
-              'extensions/opera.crx#opera_extension_${tag#v}.crx' \
+              "extensions/chrome.crx#chrome_extension_$tag.crx" \
+              "extensions/firefox.zip#firefox_extension_$tag.zip" \
+              "extensions/opera.crx#opera_extension_$tag.crx" \
               --repo="$GITHUB_REPOSITORY" \
               --title="${tag#v}" \
               --generate-notes
