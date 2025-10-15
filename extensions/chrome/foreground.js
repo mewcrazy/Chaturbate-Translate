@@ -301,30 +301,30 @@ function addTransButtonCamGroup() {
 /**
  * True Fullscreen & Picture in Picture
  */
-waitForKeyElements(".player-controls-user__right-buttons", videoAddPip, false);
+waitForKeyElements(".theater-overlay", videoAddPip, false);
 function videoAddPip(el) {
 
   // midclick fullscreen
-  $('.video').off().on('mousedown', '.player-controls-layers__layer--toggle,.video-element', function(e) {
+  $('#TheaterModePlayer').off().on('mousedown', 'video,.vjs-tech', function(e) {
     if(e.which === 2) {
       e.preventDefault();
-      toggleFullscreen(document.getElementsByClassName('video-element')[0])
+      toggleFullscreen(document.getElementsByClassName('vjs-tech')[0])
     }
   });
   
   // true fullscreen
-  $(el).append('<button class="se-fullscreen btn ds-btn-inline-block overflow-visible player-controls-user__button player-top-button" type="button"><svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.24 10.24" xml:space="preserve"><path d="m1.862 2.792 0.93 -0.93 -0.93 -0.932L2.792 0H0v2.792l0.93 -0.93zm0 4.656 -0.93 0.93L0 7.448V10.24h2.792l-0.93 -0.93 0.93 -0.93zm5.586 -4.656H2.792v4.654h4.654V2.792zm-0.932 3.724H3.724V3.724h2.792zM7.448 0l0.93 0.93L7.448 1.86l0.93 0.93L9.308 1.86l0.93 0.93V0zm0.93 7.448 -0.93 0.93 0.93 0.93 -0.93 0.932H10.24V7.448l-0.93 0.93z" fill="#fff"/></svg></button>')
+  $(el).next().append('<div class="hover-btn drop-shadow-container" aria-label="Theater Mode" data-listener-count-pointerenter="3" data-listener-count-pointerleave="3" ts="_" id="theater-mode-icon" data-listener-count-click="1" style="display: inline-flex; position: relative; align-items: center; justify-content: center; min-width: 32px; user-select: none; pointer-events: auto;"><svg class="animated-icon scale-wide" height="16" width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.24 10.24" xml:space="preserve"><path d="m1.862 2.792 0.93 -0.93 -0.93 -0.932L2.792 0H0v2.792l0.93 -0.93zm0 4.656 -0.93 0.93L0 7.448V10.24h2.792l-0.93 -0.93 0.93 -0.93zm5.586 -4.656H2.792v4.654h4.654V2.792zm-0.932 3.724H3.724V3.724h2.792zM7.448 0l0.93 0.93L7.448 1.86l0.93 0.93L9.308 1.86l0.93 0.93V0zm0.93 7.448 -0.93 0.93 0.93 0.93 -0.93 0.932H10.24V7.448l-0.93 0.93z" fill="#fff"/></svg><div class="no-drop-shadow video-controls-tooltip" ts="N" style="position: absolute; display: block; opacity: 0; bottom: calc(100% + 5px); left: 50%; transform: translateX(-50%); border-radius: 4px; background-color: rgba(0, 0, 0, 0.92); padding: 8px 16px; text-align: center; font-size: 13px; color: rgb(255, 255, 255); width: max-content; max-width: 150px; transition: inherit; pointer-events: none; visibility: hidden;"><p style="display: inline;">Theater Mode</p></div></div>')
   $('.se-fullscreen').on('click', function(e) {
       $(this).attr('disabled', true)
-      toggleFullscreen(document.getElementsByClassName('video-element')[0])
+      toggleFullscreen(document.getElementsByClassName('vjs-tech')[0])
       $(this).attr('disabled', false)
   });
 
   // pip
-  $(el).append('<button class="se-pip btn ds-btn-inline-block overflow-visible player-controls-user__button player-top-button" type="button"><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pip"><path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5zM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z" fill="#fff"/><path d="M8 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5z" fill="#fff"/></svg></button>')
+  $(el).next().append('<div class="hover-btn drop-shadow-container" aria-label="Theater Mode" data-listener-count-pointerenter="3" data-listener-count-pointerleave="3" ts="_" id="theater-mode-icon" data-listener-count-click="1" style="display: inline-flex; position: relative; align-items: center; justify-content: center; min-width: 32px; user-select: none; pointer-events: auto;"><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pip"><path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5zM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z" fill="#fff"/><path d="M8 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5z" fill="#fff"/></svg><div class="no-drop-shadow video-controls-tooltip" ts="N" style="position: absolute; display: block; opacity: 0; bottom: calc(100% + 5px); left: 50%; transform: translateX(-50%); border-radius: 4px; background-color: rgba(0, 0, 0, 0.92); padding: 8px 16px; text-align: center; font-size: 13px; color: rgb(255, 255, 255); width: max-content; max-width: 150px; transition: inherit; pointer-events: none; visibility: hidden;"><p style="display: inline;">Theater Mode</p></div></div>')
   $('.se-pip').on('click', function(e) {
     $(this).attr('disabled', true)
-    openPip(document.getElementsByClassName('video-element')[0])
+    openPip(document.getElementsByClassName('vjs-tech')[0])
     $(this).attr('disabled', false)
   });
 }
