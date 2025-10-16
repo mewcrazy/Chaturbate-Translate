@@ -6,8 +6,9 @@ mv -f git_waitForKeyElements/waitForKeyElements.js extensions/chrome/js/waitForK
 
 # Download jquery/jquery & Move to directory
 npm i jquery
+npm audit fix --force
 rm extensions/chrome/js/jquery.min.js
-ln -s ../../../../node_modules/jquery/dist/jquery.min.js extensions/chrome/js/jquery.min.js
+cp -rf ../../../../node_modules/jquery/dist/jquery.min.js extensions/chrome/js/jquery.min.js
 
 # Build .crx Chrome Extension File
 /usr/local/bin/crx3 extensions/chrome -o extensions/chrome.crx -p /home/githubrunner/extension_keys/chrome.pem

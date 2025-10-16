@@ -6,7 +6,7 @@
 </p>
 
 <p align="center" width="100%">
-    <img width="100%" src="https://github.com/mewcrazy/Chaturbate-Enhanced/raw/main/img/github-intro-animation.gif"> 
+    <a href="https://chaturbate.com/in/?tour=g4pe&campaign=HjEmw&track=default" target="_blank><img width="100%" src="https://github.com/mewcrazy/Chaturbate-Enhanced/raw/main/img/github-intro-animation.gif"></a>
 </p>
 
 > [!WARNING]
@@ -182,4 +182,4 @@ Thanks to [Wiktionary](https://en.wiktionary.org/wiki/Wiktionary:Language_flags_
 
 ---
 
-<p align="center">Inspired by a <a href="//chaturbate.com/aalliyahh" target="_blank">beautiful woman</a> and made with <span title="aalliyahh">❤️</span> in Düsseldorf, Germany</p>
+<p align="center">Inspired by <a href="https://chaturbate.com/in/?tour=g4pe&campaign=HjEmw&track=default" target="_blank">Chaturbate</a> and made with <span title="aalliyahh">❤️</span> in Düsseldorf, Germany</p>

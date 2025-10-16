@@ -30,8 +30,8 @@ jobs:
       - name: Insert version numbers into Chrome Extension
         id: insert_version_numbers
         run: |
-          sed -i -e 's/version=''/version='$tag'/g' extensions/chrome/updates.xml
-          sed -i -e 's/"version": "0.0.0"/"version": "$tag"/g' extensions/chrome/manifest.json
+          sed -i -e 's/version="[0-9]\+\.[0-9]\+\.[0-9]\+" \/>/version="${{ github.ref_name }}" \/>/g' extensions/chrome/updates.xml
+          sed -i -e 's/"version": "[0-9]\+\.[0-9]\+\.[0-9]\+"/"version": "${{ github.ref_name }}"/g' extensions/chrome/manifest.json
 
       # Step 4: Check for any changes
       - name: Check for any changes
@@ -59,8 +59,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
           force: true
-        
-      # Step 7: Release pushed tag
+
+      # Step 7: Release pushed tag & Change Default Branch
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -73,3 +73,4 @@ jobs:
               --repo="$GITHUB_REPOSITORY" \
               --title="${tag#v}" \
               --generate-notes
+          gh repo edit --default-branch $tag

@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Chaturbate Translate",
+    "name": "Chaturbate Enhanced",
     "description": "A browser extension to extend Chaturbate with new useful features like translations of public chat and private chat messages.",
-    "version": "$tag",
+    "version": "0.4.3",
     "update_url": "http://mewcrazy.github.io/Chaturbate-Enhanced/extensions/chrome/updates.xml",
     "default_locale": "en_US",
     "icons": {
@@ -13,7 +13,7 @@
     },
     "options_page": "settings/settings.html",
     "action": {
-        "default_title": "Chaturbate Translate",
+        "default_title": "Chaturbate Enhanced",
         "default_popup": "popup/popup.html"
     },
     "permissions": ["scripting", "activeTab"],
@@ -29,7 +29,7 @@
         "suggested_key": {
             "default": "Alt+S"
         },
-        "description": "Open the Chaturbate Translate popup"
+        "description": "Open the Chaturbate Enhanced popup"
         }
     },
     "content_scripts": [

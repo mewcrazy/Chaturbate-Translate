@@ -29,7 +29,7 @@ function savePlayerVolume(player) {
   }
 
   $(player).on('volumechange', function(e) {
-    localStorage.setItem("SE_playerVolume", player.get(0).volume)
+    localStorage.setItem("SE_playerVolume", $(player).get(0).volume)
   })
 }
 
@@ -179,6 +179,8 @@ function addMessageTemplates(el) {
  */
 waitForKeyElements(".message-list", hideChatUsers, false);
 function hideChatUsers(el) {
+  let username = $('.user_information_header_username').text()
+  let usernameModel = $('.activeRoom').text().split('\'')[0].toLowerCase()
 
   // observe messages div
   var observer = new MutationObserver(function(e) {
@@ -190,6 +192,19 @@ function hideChatUsers(el) {
           $(this).addClass("se-processed")
         }
       })
+
+      // DND Mode (filter everything else)
+      if($('.switch-dnd-mode input[type="checkbox"]').is(':checked')) {
+        $(el).find('[data-testid="chat-message"]').slice(-50).each(function(index, item) {
+          if(
+            $(this).find('[data-testid="username"]').text() != username && $(this).find('[data-testid="username"]').text() != usernameModel
+            && !$(this).find('.roomNotice.isTip,.roomNotice.titleChange,.roomNotice.bright-background').length
+          )
+            $(this).addClass("se-hidden")
+        })
+      } else {
+        $(el).find('[data-testid="chat-message"].se-hidden').removeClass('se-hidden')
+      }
 
       // auto translate
       if($('.switch-auto-translate input[type="checkbox"]').is(':checked')) {
@@ -359,6 +374,18 @@ function addLangDropdownPrivateChats(el) {
 
 
 /**
+ * Do Not Disturb Mode
+ */
+waitForKeyElements('#settings-tab-default', addDefaultEmojis);
+function addDefaultEmojis(el) {
+  let tabNav = $(el).closest('#tab-nav')
+
+  // append dnd toggle
+  $(el).after('<div class="se-switcher switch-dnd-mode"><span>DND Mode</span><div class="toggle"><input type="checkbox" id="mode-toggle" class="toggle__input"><label for="mode-toggle" class="toggle__label"></label></div></div>')
+}
+
+
+/**
  *  Add Translation Button to Stream Description
  */
 waitForKeyElements('#VideoPanel .RoomSubjectSpan', addTransButtonCamGroup, false);
@@ -396,6 +423,9 @@ function videoAddPip(el) {
       e.preventDefault();
       toggleFullscreen(document.getElementsByClassName('vjs-tech')[0])
     }
+  });
+  $('#TheaterModePlayer').off().on('dblclick', 'video,.vjs-tech', function(e) {
+    toggleFullscreen(document.getElementsByClassName('vjs-tech')[0])
   });
 
   // pip
@@ -809,12 +839,12 @@ function getResource(path) {
 }
 
 // Switch Toggle
-waitForKeyElements('#body', addBodyShit);
-function addBodyShit(jNode) {
+waitForKeyElements('#main.chat_room', addBodyShit);
+function addBodyShit(el) {
 
-  $('#body').on('click', '.se-switcher', function(e) {
-    $(this).find('.switcher').toggleClass("on")
-    $(this).find('input[type="checkbox"]').prop('checked', function (i, val) {
+  $(el).on('click', '.se-switcher', function(e) {
+    $(this).toggleClass("on")
+    $(this).find('input').prop('checked', function (i, val) {
       return !val;
     }).trigger('change');
   })
