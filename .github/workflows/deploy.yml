@@ -59,21 +59,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
           force: true
-        
-      # Step 7: Generate Personal Access Token 
-      - name: Generate a token
-        id: generate_token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.APP_ID }}
-          private-key: ${{ secrets.APP_PRIVATE_KEY }}
-
-      # Step 8: Use Personal Access Token 
-      - name: Use the token
-        env:
-          GH_TOKEN: ${{ steps.generate_token.outputs.token }}
-        run: |
-          gh api octocat
 
       # Step 7: Release pushed tag & Change Default Branch
       - name: Create release
