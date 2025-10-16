@@ -1,4 +1,4 @@
-.hidden { display: none !important; }
+.se-hidden, .hidden { display: none !important; }
 
 /* loading spinner */
 .se-loader { position: absolute; top: calc(50% - 24px); left: calc(50% - 24px); width: 48px; height: 48px; border: 5px solid #aaa; border-bottom-color: transparent; border-radius: 50%; display: inline-block; box-sizing: border-box; animation: rotate 1s linear infinite; }
@@ -74,7 +74,6 @@ button + .se-loader { display: none; }
 /* language chooser: direct messages */
 .dmWindow .language-chooser { bottom: 0; height: 100%; }
 
-
 /* translate topic */
 .RoomSubjectSpan { width: auto !important; }
 .roomSubject .translate-line button { display: inline; position: relative; top: .25em; }
@@ -92,7 +91,7 @@ button + .se-loader { display: none; }
 #FVChatTabContents .chat-input-div { position: relative; }
 #FVChatTabContents .se-langpicker { top: 9px; }
 
-/* translate Private Messsages */
+/* Translate Private Messsages */
 .messenger-chat .language-search { max-width: 140px; }
 .messenger-chat .content-messages .message-base.m-bg-error { background-color: #ab262e; }
 .messenger-chat .content-messages .message-base { font-size: .65rem; line-height: 1.15rem; background-color: transparent; border-bottom: 1px solid #2e2e2e; color: #e1e1e1; padding: 15px; }
@@ -100,13 +99,20 @@ button + .se-loader { display: none; }
 .messenger-chat .content-messages .system-text-message-error { color: rgb(255, 255, 255); cursor: pointer; padding: 10px; }
 .messenger-chat .content-messages .message-body { width: 100%; }
 
-/* switcher */
-.switch-dnd-mode { display: flex; align-items: center; flex: 1; justify-content: flex-end; margin-right: 46px; }
-.switcher + input[type="checkbox"] { display: none }
+/* Switcher */
+.toggle { position: relative; display: inline-block; }
+.toggle__input { display: none; }
+.toggle__label { display: block; width: 40px; height: 20px; background-color: #2d3e50; border-radius: 99px; cursor: pointer; transition: background-color 0.3s ease; }
+.toggle__input:checked + .toggle__label { background: #f47321; }
+.toggle__input:checked + .toggle__label::after { left: 23px; }
+.toggle__label::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: #ffffff; border-radius: 50%; transition: left 0.3s ease; }
+#tab-row .toggle__label {  }
+#tab-row .toggle__label::after {  }
 
 /* dnd mode */
-.switch-dnd-mode { display: flex; align-items: center; flex: 1; justify-content: flex-end; margin-right: 46px; }
-.switcher + input[type="checkbox"] { display: none }
+.switch-dnd-mode { display: flex; align-items: center; flex: 1; justify-content: flex-end; position: absolute; bottom: calc(50% - 10px); right: 10px; }
+.se-switcher + input[type="checkbox"] { display: none }
+.se-switcher > span { padding-right: 10px; }
 
 /* listing: model info overlay */
 .se-model-info { position: relative; }
