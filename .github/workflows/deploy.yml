@@ -59,8 +59,23 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
           force: true
+        
+      # Step 7: Generate Personal Access Token 
+      - name: Generate a token
+        id: generate_token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
-      # Step 7: Release pushed tag & Change Default Branch
+      # Step 8: Use Personal Access Token 
+      - name: Use the token
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          gh api octocat
+
+      # Step 7: Release pushed tag
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -73,4 +88,11 @@ jobs:
               --repo="$GITHUB_REPOSITORY" \
               --title="${tag#v}" \
               --generate-notes
+          
+      # Step 7: Change Default Branch
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+          tag: ${{ github.ref_name }}
+        run: |
           gh repo edit --default-branch $tag
