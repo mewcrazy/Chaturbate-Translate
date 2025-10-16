@@ -24,6 +24,18 @@ button + .se-loader { display: none; }
 .filters-favorites .model-filter-link:before { content: "|"; display: inline-block; position: absolute; left: -5px; top: calc(50% - 8px); font-size: 10px; color: #999; }
 .filters-favorites .model-filter-link:first-child:before { content: none; }
 .filters-favorites .model-filter-link.active { color: #fff; }
+#roomlist_root .roomlist_container ul.list .roomCard { width: auto !important; }
+#main #roomlist_root .roomlist_container ul.list[data-grid="1"] { grid-template-columns: repeat(1, 1fr); }
+#main #roomlist_root .roomlist_container ul.list[data-grid="2"] { grid-template-columns: repeat(2, 1fr); }
+#main #roomlist_root .roomlist_container ul.list[data-grid="3"] { grid-template-columns: repeat(3, 1fr); }
+#main #roomlist_root .roomlist_container ul.list[data-grid="4"] { grid-template-columns: repeat(4, 1fr); }
+#main #roomlist_root .roomlist_container ul.list[data-grid="5"] { grid-template-columns: repeat(5, 1fr); }
+#main #roomlist_root .roomlist_container ul.list[data-grid="6"] { grid-template-columns: repeat(6, 1fr); }
+#main #roomlist_root .roomlist_container ul.list[data-grid="7"] { grid-template-columns: repeat(7, 1fr); }
+#main #roomlist_root .roomlist_container ul.list[data-grid="8"] { grid-template-columns: repeat(8, 1fr); }
+#main #roomlist_root .roomlist_container ul.list[data-grid="9"] { grid-template-columns: repeat(9, 1fr); }
+#main #roomlist_root .roomlist_container ul.list[data-grid="10"] { grid-template-columns: repeat(10, 1fr); }
+
 
 /* language picker */
 .se-langpicker { position: absolute; top: 6px; left: 2px; z-index: 1; opacity: .6; cursor: pointer; text-align: center; width: 25px; height: 17px; }
@@ -35,6 +47,12 @@ button + .se-loader { display: none; }
 .customInput.chat-input-field, .inputFieldChatPlaceholder::before,
 .se-langpicker[data-active] + .chat-input-form .customInput.chat-input-field, .se-langpicker[data-active] + .chat-input-form .inputFieldChatPlaceholder::before { padding-left: 27px }
 .se-langpicker[data-active=""] + .chat-input-form .customInput.chat-input-field, .se-langpicker[data-active=""] + .chat-input-form .inputFieldChatPlaceholder::before { padding-left: 21px }
+
+/* language picker: direct messages */
+.dmWindow .se-langpicker { top: .75em; }
+.dmWindow .se-langpicker + textarea { line-height: 1.7; }
+.dmWindow .se-langpicker[data-active] + textarea { padding-left: 31px !important; }
+.dmWindow .se-langpicker[data-active=""] + textarea, .dmWindow .se-langpicker + textarea { padding-left: 26px !important; }
 
 /* language chooser */
 .language-chooser { background: #17202a; bottom: 33px; right: 0; left: 0; height: 40%; position: absolute; z-index: 2; overflow: hidden }
@@ -52,6 +70,14 @@ button + .se-loader { display: none; }
 .language-list .flag-ta, .language-list .flag-sa, .language-list .flag-pa, .language-list .flag-ne { background: #fff; }
 .input.language-search { background: rgba(0,0,0,.2); padding: 10px 15px; height: 30px; border-radius: 15px; color: #fff; }
 .input.language-search:hover { background: rgba(0,0,0,1) }
+
+/* language chooser: direct messages */
+.dmWindow .language-chooser { bottom: 0; height: 100%; }
+
+
+/* translate topic */
+.RoomSubjectSpan { width: auto !important; }
+.roomSubject .translate-line button { display: inline; position: relative; top: .25em; }
 
 /* translate chat */
 .msg-text .translate-line button { display: inline; }

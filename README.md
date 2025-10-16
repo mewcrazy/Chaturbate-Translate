@@ -13,13 +13,11 @@
 > Chaturbate Enhanced is currently in active development and is not ready to use yet. The translation feature is ready and working, the rest is not finished yet.
 
 ## Planned Features:
-- Translate chat messages, tip menus, tip goals and private show testimonials <sub style="color:rgba(255,255,255,.55)">(in over different 100 languages with 1-click)</sub>
-- Open stream in a true fullscreen which is not limited to your browser <sub style="color:rgba(255,255,255,.55)">(A true fullscreen like YouTube; without chat or any animations)</sub>
+- Translate chat messages & direct messages on-the-fly in over different 100 languages with 1-click
+- Filter your favorites by country, age, private prices and more
+- Picture in Picture Mode
 - Hide distracting chat notice messages <sub style="color:rgba(255,255,255,.55)">(Tip Goals, Interactive Toy, Welcome Bot & Fan Club Discount Messages)</sub>
 - Do Not Disturb Mode <sub style="color:rgba(255,255,255,.55)">(Shows only yours and the models chat messages)</sub>
-- Resizable video frame <sub style="color:rgba(255,255,255,.55)">(Shrink the video player to your desired size)</sub>
-- Hide unneeded links in the site's sidebar <sub style="color:rgba(255,255,255,.55)">(For a cleaner experience)</sub>
-- Filter your favorites by country, age, private prices and more <sub style="color:rgba(255,255,255,.55)">(Search your favorites by name and filter them)</sub>
 - Hide the "Auto-Refill" feature to avoid accidental charges <sub style="color:rgba(255,255,255,.55)">(Remove tempting token buy notices)</sub>
 - Keep volume always saved <sub style="color:rgba(255,255,255,.55)">(Fixes muted streams after seeing a starting Ticket or Group Show)</sub>
 

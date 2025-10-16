@@ -21,32 +21,25 @@ var htmlEnhancedOptions = chrome.runtime.getURL('html/enhanced-options.html')
 /**
  * Save Player Volume
  */
-waitForKeyElements(".mse-player video", savePlayerVolume, false);
-function savePlayerVolume(el) {
-  let player = $('.mse-player video')
+waitForKeyElements("#TheaterModePlayer .vjs-tech", savePlayerVolume, false);
+function savePlayerVolume(player) {
 
   if(localStorage.getItem("SE_playerVolume")) {
-    $('.mse-player video').get(0).volume = localStorage.getItem("SE_playerVolume")
+    $(player).get(0).volume = localStorage.getItem("SE_playerVolume")
   }
 
-  $(el).on('volumechange', function(e) {
+  $(player).on('volumechange', function(e) {
     localStorage.setItem("SE_playerVolume", player.get(0).volume)
   })
 }
 
 
 /**
- * Save Favorites Order
+ * Hide Auto Refill Feature
  */
-waitForKeyElements("[class*='ModelsOrderDropdown__content']", saveFavoritesSorting);
-function saveFavoritesSorting(el) {
-
-  $("[class*='ModelsOrderDropdown__content']").off().on('click', 'a', function() {
-    let path = location.pathname
-    $("[class*='SidebarLink'][href='/favorites']").attr("href", path)
-    localStorage.setItem("SE_favoritesSorting", path)
-    localStorage.setItem("SE_favoritesSortingName", $(this).text())
-  })
+waitForKeyElements('form[data-testid="settings-tab-form"]', hideAutoRefillFeature);
+function hideAutoRefillFeature() {
+  processOption("SE_optionDisableAutoRefill")
 }
 
 
@@ -98,8 +91,8 @@ function processOption(name, val) {
 
   switch(name) {
     case "SE_optionDisableAutoRefill":
-      break;
-    case "SE_optionDisableQuickRefill":
+      alert("hm")
+      $('fieldset.auto-refill-fieldset').addClass('hidden')
       break;
     case "SE_optionEnableTranslations":
       break;
@@ -237,60 +230,153 @@ function hideChatUsers(el) {
 }
 
 
-/*
-  * Translate Private Shows Testimonials
-  */
-waitForKeyElements(".testimonial__description", translatePrivateTestimonials);
-function translatePrivateTestimonials(jNode) {
+/**
+ * Private Messages Translations
+ */ 
+waitForKeyElements(".dmWindowInput", addLangDropdownPrivateChats, false);
+function addLangDropdownPrivateChats(el) {
+  let dm = $(el).closest('.dmWindow')
+  let dmSubmit = $(el).find('.sendButton')
+  let dmInputDiv = $(el)
+  let dmInput = $(el).find('textarea')
 
-  // append translate button
-  if(!$(jNode).hasClass('se-procesed')) {
-    $(jNode).append(htmlTranslateButton)
-    $(jNode).addClass("se-processed")
+  // add language dropdown
+  if(!dm.find('.language-picker').length) {
+    dmInputDiv.prepend(htmlLangPicker);
+
+    // preselect if choosen before
+    if(prefTranslationLang) {
+      setTimeout(function() {
+        dmInputDiv.find('.se-langpicker').attr('data-active', prefTranslationLang)
+        dmInputDiv.find('.se-langpicker').prepend('<svg class="flag flag-'+prefTranslationLang+'"><use xlink:href="#'+prefTranslationLang+'"></use></svg>')
+      }, 500);
+    }
   }
 
-  // translate button click handler
-  $('.testimonial__description').off().on('click', '.translate-line button', function(e) {
-    let ell = $(this).closest('div').clone()
-    ell.find('.translate-line').remove()
-    let text = ell.text().trim()
-    let that = $(this)
-    $(this).prop('disabled', true)
-
-    translateGoogle(text, 'en_US', $('.model-chat-content')).then(function(data) {
-      if(!that.closest('div').find('.translated-line').length) {
-          that.closest('div').find('.translate-line').before('<small class="translated-line">'+decodeHtml(data.data.translations[0].translatedText)+'</small>')
+  // reset language on right click
+  dmInputDiv.find(".se-langpicker,.se-langpicker > .flag").on("contextmenu", function() { return false; });
+  dmInputDiv.find('.se-langpicker').on('mousedown', function(e) {
+      if( e.button == 2 ) {
+        dmInputDiv.find('.se-langpicker').find('.flag,use').remove()
+        $('.language-chooser .flag').removeClass('active')
+        dmInputDiv.find('.se-langpicker').attr('data-active', '')
+        localStorage.setItem('prefTranslationLang', "")
+        return false;
       }
-      $(this).prop('disabled', false)
-    })
+      return true;
   })
+  
+  // add own keypress event
+  dmInput.off().on('keydown', function(e) {
+    if(e.which == 13) {
+      e.preventDefault()
+      e.stopImmediatePropagation()
+      e.stopPropagation()
+
+      dm.find('.language-chooser').addClass("hidden")
+      if(dm.find('.se-langpicker').attr('data-active')) {
+          let lang = dm.find('.se-langpicker').attr('data-active').toLowerCase()
+          dmInputDiv.append('<span class="se-loader-line"></span>') // TODO please as before
+
+          console.log($(this).val(), $(this).text(), lang)
+          console.log(dm.find('textarea').val(), dm.find('textarea').text(), lang)
+
+          translateGoogle($(this).val(), lang, dm.find('.content-messages')).then((data) => {
+            alert("ok translated")
+              // TODO: console.log missing/wrong languages
+              $(this).val('')
+              $('.messenger-chat .se-loader-line').remove()
+              $(this).focus()
+              document.execCommand('insertText', false, decodeHtml(data.data.translations[0].translatedText))
+              dmSubmit.click()
+          });
+      } else {
+          // no translation needed
+          dmSubmit.click()
+      }
+    }
+  })
+
+  // open language picker click handler
+  $(el).on('click', '.se-langpicker', function(e) {
+
+      if(!dm.find('.language-chooser').length) {
+
+        // add language picker overlay
+        $(el).prev().append(htmlLangChooser);
+
+        // add all languages
+        populateLanguageDropdowns()
+
+        setTimeout(() => { $('.flag[data-lang="'+prefTranslationLang+'"]').addClass("active") }, 300);
+      } else {
+        dm.find('.language-chooser').toggleClass("hidden")
+      }
+  })
+
+    // select/switch language
+    dm.on('click', 'button.flag', function(e) {
+
+      dm.find('.se-langpicker .flag').remove()
+      if($(this).hasClass('active')) {
+          $(this).removeClass('active')
+          dm.find('.se-langpicker').attr('data-active', '')
+          localStorage.setItem('prefTranslationLang', "")
+      } else {
+          dm.find('.se-langpicker').prepend($(this).html())
+          dm.find('.language-chooser .flag.active').removeClass('active')
+          $(this).addClass('active')
+          dm.find('.se-langpicker').attr('data-active', $(this).attr('data-lang'))
+          localStorage.setItem('prefTranslationLang', $(this).attr('data-lang'))
+          dm.find('.language-chooser').addClass("hidden")
+      }
+    })
+
+    // search language by html attributes
+    dm.on("keyup", ".language-search", function() {
+        var value = this.value.toLowerCase().trim();
+      if(value.length) {
+        dm.find(".language-list button").show().filter(function() {
+            return $(this).attr("data-search").toLowerCase().trim().indexOf(value) == -1;
+        }).hide();
+      } else {
+        dm.find(".language-list button").show();
+      }
+    });
+
+    // clear search input
+    dm.on('search', '.language-search', function() {
+      if(this.value === "") {
+        dm.find(".language-list button").show()
+      }
+    });
+
+    // close language chooser
+    dm.on('click', '.close-language-chooser', function(e) {
+      dm.find('.language-chooser').toggleClass("hidden")
+    })
 }
 
 
 /**
  *  Add Translation Button to Stream Description
  */
-waitForKeyElements('[class*="ViewCamShutterWrapper__status"]', addTransButtonCamGroup, false);
-function addTransButtonCamGroup() {
+waitForKeyElements('#VideoPanel .RoomSubjectSpan', addTransButtonCamGroup, false);
+function addTransButtonCamGroup(el) {
 
-  // add translation button to regular messages
-  var observerCamGroup = new MutationObserver(function(e) {
-
-    if(!$('[class*="ViewCamGroup__description"] .translate-line').length) {
-        $('[class*="ViewCamGroup__description"]').append(htmlTranslateButton)
-    }
-  });
-  observerCamGroup.observe($('[class*="ViewCamShutterWrapper__status"]')[0], {characterData: true, childList: true, subtree: true});
+  if(!$(el).find('.translate-line').length) {
+    $(el).append(htmlTranslateButton)
+  }
 
   // add event click handler
-  $('[class*="ViewCamShutterWrapper__status"]').off().on('click', '.translate-line button', function(e) {
-      let text = $(this).closest('[class*="ViewCamGroup__description"]').clone().text().trim()
+  $(el).off().on('click', '.translate-line', function(e) {
+      let text = $(this).closest('.RoomSubjectSpan').clone().text().trim()
       let that = $(this)
       $(this).prop('disabled', true)
 
       translateGoogle(text, 'en_US', $('.model-chat-content')).then(function(data) {
-        if(!that.closest('[class*="ViewCamGroup__description"] .translated-line').length) {
-            that.closest('[class*="ViewCamGroup__description"]').find('.translate-line').before('<small class="translated-line">'+decodeHtml(data.data.translations[0].translatedText)+'</small>')
+        if(!that.prev('.translated-line').length) {
+            that.before('<small class="translated-line">'+decodeHtml(data.data.translations[0].translatedText)+'</small>')
         }
         $(this).prop('disabled', false)
       })
@@ -299,7 +385,7 @@ function addTransButtonCamGroup() {
 
 
 /**
- * True Fullscreen & Picture in Picture
+ * Picture in Picture
  */
 waitForKeyElements(".theater-overlay", videoAddPip, false);
 function videoAddPip(el) {
@@ -311,17 +397,9 @@ function videoAddPip(el) {
       toggleFullscreen(document.getElementsByClassName('vjs-tech')[0])
     }
   });
-  
-  // true fullscreen
-  $(el).next().append('<div class="hover-btn drop-shadow-container" aria-label="Theater Mode" data-listener-count-pointerenter="3" data-listener-count-pointerleave="3" ts="_" id="theater-mode-icon" data-listener-count-click="1" style="display: inline-flex; position: relative; align-items: center; justify-content: center; min-width: 32px; user-select: none; pointer-events: auto;"><svg class="animated-icon scale-wide" height="16" width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.24 10.24" xml:space="preserve"><path d="m1.862 2.792 0.93 -0.93 -0.93 -0.932L2.792 0H0v2.792l0.93 -0.93zm0 4.656 -0.93 0.93L0 7.448V10.24h2.792l-0.93 -0.93 0.93 -0.93zm5.586 -4.656H2.792v4.654h4.654V2.792zm-0.932 3.724H3.724V3.724h2.792zM7.448 0l0.93 0.93L7.448 1.86l0.93 0.93L9.308 1.86l0.93 0.93V0zm0.93 7.448 -0.93 0.93 0.93 0.93 -0.93 0.932H10.24V7.448l-0.93 0.93z" fill="#fff"/></svg><div class="no-drop-shadow video-controls-tooltip" ts="N" style="position: absolute; display: block; opacity: 0; bottom: calc(100% + 5px); left: 50%; transform: translateX(-50%); border-radius: 4px; background-color: rgba(0, 0, 0, 0.92); padding: 8px 16px; text-align: center; font-size: 13px; color: rgb(255, 255, 255); width: max-content; max-width: 150px; transition: inherit; pointer-events: none; visibility: hidden;"><p style="display: inline;">Theater Mode</p></div></div>')
-  $('.se-fullscreen').on('click', function(e) {
-      $(this).attr('disabled', true)
-      toggleFullscreen(document.getElementsByClassName('vjs-tech')[0])
-      $(this).attr('disabled', false)
-  });
 
   // pip
-  $(el).next().append('<div class="hover-btn drop-shadow-container" aria-label="Theater Mode" data-listener-count-pointerenter="3" data-listener-count-pointerleave="3" ts="_" id="theater-mode-icon" data-listener-count-click="1" style="display: inline-flex; position: relative; align-items: center; justify-content: center; min-width: 32px; user-select: none; pointer-events: auto;"><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pip"><path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5zM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z" fill="#fff"/><path d="M8 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5z" fill="#fff"/></svg><div class="no-drop-shadow video-controls-tooltip" ts="N" style="position: absolute; display: block; opacity: 0; bottom: calc(100% + 5px); left: 50%; transform: translateX(-50%); border-radius: 4px; background-color: rgba(0, 0, 0, 0.92); padding: 8px 16px; text-align: center; font-size: 13px; color: rgb(255, 255, 255); width: max-content; max-width: 150px; transition: inherit; pointer-events: none; visibility: hidden;"><p style="display: inline;">Theater Mode</p></div></div>')
+  $(el).next().append('<div class="se-pip hover-btn drop-shadow-container" aria-label="Theater Mode" data-listener-count-pointerenter="3" data-listener-count-pointerleave="3" ts="_" id="theater-mode-icon" data-listener-count-click="1" style="display: inline-flex; position: relative; align-items: center; justify-content: center; min-width: 32px; user-select: none; pointer-events: auto;"><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pip"><path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5zM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z" fill="#fff"/><path d="M8 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5z" fill="#fff"/></svg><div class="no-drop-shadow video-controls-tooltip" ts="N" style="position: absolute; display: block; opacity: 0; bottom: calc(100% + 5px); left: 50%; transform: translateX(-50%); border-radius: 4px; background-color: rgba(0, 0, 0, 0.92); padding: 8px 16px; text-align: center; font-size: 13px; color: rgb(255, 255, 255); width: max-content; max-width: 150px; transition: inherit; pointer-events: none; visibility: hidden;"><p style="display: inline;">Theater Mode</p></div></div>')
   $('.se-pip').on('click', function(e) {
     $(this).attr('disabled', true)
     openPip(document.getElementsByClassName('vjs-tech')[0])
@@ -391,10 +469,7 @@ function addLangDropdown(jNode) {
     $(jNode).append('<input class="se-custom-input customInput chat-input-field" type="text" value="" style="background: none; color: #b3b3b3; height: 16px; width: 100%; position: relative; overflow: scroll hidden; -webkit-tap-highlight-color: transparent; outline: none; border: none; box-sizing: border-box; font-size: 12px; white-space: nowrap; user-select: text; font-family: Helvetica, Arial, sans-serif; line-height: 15px;">')
 
     // add own keypress event
-    $('.se-custom-input').on('blur', function(e) {
-      modelChatInput.text($(this).val()).trigger("blur").trigger("input").trigger("paste")
-    })
-    $('.se-custom-input').on('blur', function(e) {
+    $('.se-custom-input').on('blur input', function(e) {
       modelChatInput.text($(this).val()).trigger("blur").trigger("input").trigger("paste")
     })
 
@@ -408,27 +483,29 @@ function addLangDropdown(jNode) {
           e.stopPropagation()
           $('.language-chooser').addClass("hidden")
 
-            if($('.se-langpicker').attr('data-active')) {
+          if($('.se-langpicker').attr('data-active')) {
 
-                // only logged in users
-                if(!$('.user_information_container').length) {
-                    alert("You have to be logged in to send translated messages.")
-                    return
-                }
-                
-                translateGoogle($(this).val(), $('.se-langpicker').attr('data-active').toLowerCase(), $('.msg-list-wrapper-split')).then((data) => {
-                    let t = decodeHtml(data.data.translations[0].translatedText)
-                    $(this).val('').focus()
-                    document.execCommand('insertText', false, t)
-                    modelChatInput.text(t)
-                    console.log($('.BaseTabsContainer .SendButton').length)
-                    $('.BaseTabsContainer .SendButton').click()
-                });
-            } else {
-                // no translation needed
+              // only logged in users
+              if(!$('.user_information_container').length) {
+                  alert("You have to be logged in to send translated messages.")
+                  return
+              }
+              
+              translateGoogle($(this).val(), $('.se-langpicker').attr('data-active').toLowerCase(), $('.msg-list-wrapper-split')).then((data) => {
+                console.log($('.BaseTabsContainer .SendButton').length, data)
+                let trans = decodeHtml(data.data.translations[0].translatedText)
+                $(this).val('').focus()
+                document.execCommand('insertText', false, trans)
+                modelChatInput.text(trans)
                 $('.BaseTabsContainer .SendButton').click()
-            }
-            $('.se-loader-line').remove()
+                $(this).val('').focus()
+              });
+          } else {
+              // no translation needed
+              $('.BaseTabsContainer .SendButton').click()
+              $(this).val('').focus()
+          }
+          $('.se-loader-line').remove()
         }
     })
 
@@ -517,7 +594,6 @@ function addLangDropdown(jNode) {
         $(".language-list button").show()
       }
     });
-
 }
 
 
@@ -548,83 +624,6 @@ function addAutoTipButton(el) {
     let username = "xxxxxxx"; // user to tip
     //eval('for(i=0;i<tokens;i++) { setTimeout(function() { $.post("https://chaturbate.com/tipping/send_tip/" + username + "/", {"csrfmiddlewaretoken":$.cookie("csrftoken"), tip_amount: tip_amount})}, i*timeout)}')
   })
-}
-
-
-/**
- * Ticket Shows Filtering
- */
-
-// add starting soon toggle filter
-waitForKeyElements(".multiple-categories-wrapper .separated-filters", addTicketShowsFilters, false);
-function addTicketShowsFilters(jNode) {
-
-  // only on "ticket and group shows" page
-  if(window.location.toString().includes("/girls/ticket-and-group-shows")) {
-    
-    // add toggle markup
-    $(jNode).append(htmlTicketGroupshowsFilters)
-
-    // preset toggle
-    if(localStorage.getItem('ticketGroupShowTypePref') === "1") {
-      $('.switch-show-type input[type="checkbox"]').prop('checked', true)
-      $('.switch-show-type').find('.switcher').addClass("on")
-    }
-
-    // filter by html el
-    $('#body').on('click', '.switch-show-type', function(e) {
-      let that = this
-      localStorage.setItem('ticketGroupShowTypePref', ($(that).find('input[type="checkbox"]').prop('checked') ? "1" : "0"))
-
-
-      var filteredCams = $('.model-list-item').show().filter(function() {
-        return ($(that).find('input[type="checkbox"]').prop('checked') ? $(this).find('[class*="GroupShowTitleBadge"]').length >= 1 : false)
-      }).hide();
-    })
-    
-    // show all
-    $('.filters-favorites').on('click', '.show-all', function(e) {
-      $('.model-filter-link').removeClass('active')
-      $(this).closest('.model-filter-link').addClass('active')
-      $('.model-list-item').removeClass('hidden')
-      $('.filters-favorites .search input').val("")
-    })
-
-    // in ticket show
-    $('.filters-favorites').on('click', '.in-ticket-show', function(e) {
-      $('.model-filter-link').removeClass('active')
-      $(this).closest('.model-filter-link').addClass('active')
-      $('.model-list-item').removeClass('hidden').filter(function() {
-        return $(this).find('[class*="ModelListItemBadge__ticketShow"]').length === 0
-      }).addClass('hidden')
-    })
-
-    // in group show
-    $('.filters-favorites').on('click', '.in-group-show', function(e) {
-      $('.model-filter-link').removeClass('active')
-      $(this).closest('.model-filter-link').addClass('active')
-      $('.model-list-item').removeClass('hidden').filter(function() {
-        return $(this).find('[class*="ModelListItemBadge__groupShow"]').length === 0
-      }).addClass('hidden')
-    })
-  }
-}
-waitForKeyElements(".model-list-item", filterTicketShowsListing, false);
-function filterTicketShowsListing(el) {
-
-  // only on "ticket and group shows" page
-  if(window.location.toString().includes("/girls/ticket-and-group-shows")) {
-    
-    if(
-      localStorage.getItem('ticketGroupShowTypePref') === "1"
-      && $(el).find('[class*="GroupShowTitleBadge"]').length
-    ) {
-      $(el).hide()
-    }
-
-    if($('.features .in-ticket-show.active').length && $(el).find('[class*="ModelListItemBadge__ticketShow"]').length === 0) $(el).addClass('hidden')
-    if($('.features .in-group-show.active').length && $(el).find('[class*="ModelListItemBadge__groupShow"]').length === 0) $(el).addClass('hidden')
-  }
 }
 
 
@@ -671,13 +670,6 @@ function addOverlayButtons(jNode) {
 /**
  * Favorites Filtering
  */
-waitForKeyElements(".favorites-page .model-list-container", preselectFavoritesPageGrid, false);
-function preselectFavoritesPageGrid(el) {
-  if(!$('.list-items-container[data-grid]').length) {
-    let columns = localStorage.getItem("SE_gridTemplate")
-    if(columns) $(el).find('.list-items-container').attr('data-grid', columns)
-  }
-}
 waitForKeyElements(".followed_online_offline", addFavoritesFilters, false);
 function addFavoritesFilters(el) {
 
@@ -686,31 +678,37 @@ function addFavoritesFilters(el) {
 
     // add filters block html
     $(el).append(getResource('html/favorites-filters.html'))
-
-    // populate country filter
-    $('.roomCard .thumbnail_flag').each(function() {
-      if(!$('select[name="filters[country]"] option[value="'+$(this).attr('title')+'"]').length) $('select[name="filters[country]"]').append('<option value="'+$(this).attr('title')+'">'+$(this).attr('title')+'</option')
-    })
   }
 
+  // repopulate country filter on offline/offline click
+  $('.followed_online_offline > .title a').on('click', function(e) {
+    $('.country select option').not(':first').remove()
+    populateCountryFilter()
+  })
+
   // country filter
-  $('#body').on('change', '.filters-favorites .country select', function(e) {
+  populateCountryFilter()
+  $('.filters-favorites').on('change', '.country select', function(e) {
     let country = $(this).val().toLowerCase()
-    if(country !== "") {
-      var filteredCountries = $('.model-list-item').removeClass('hidden').filter(function() {
-        return (!$(this).find('.model-list-item-country').length || $(this).find('.model-list-item-country').attr('title').toLowerCase().indexOf(country) === -1)
+    if(country) {
+      var filteredCountries = $('.roomCard:not(.hidden)').removeClass('hidden').filter(function() {
+        return (!$(this).find('.thumbnail_flag>div>span').length || $(this).find('.thumbnail_flag>div>span').attr('title').toLowerCase().indexOf(country) === -1)
       }).addClass('hidden')
     } else {
-      $('.model-list-item').removeClass('hidden')
+      $('.roomCard.hidden').removeClass('hidden')
     }
   })
 
   // search filter
-  $('#body').on('input search', '.filters-favorites .search input', function(e) {
+  $('.filters-favorites').on('input search', '.search input', function(e) {
     let username = $(this).val().toLowerCase()
-    var filteredUsers = $('.model-list-item:not(.hidden)').removeClass('hidden').filter(function() {
-      return $(this).find('[class^="ModelThumbUsername"]').text().toLowerCase().indexOf(username) === -1
-    }).addClass('hidden');
+    if(username) {
+      var filteredUsers = $('.roomCard:not(.hidden)').removeClass('hidden').filter(function() {
+        return $(this).find('.cardTitle>a').attr('data-room').toLowerCase().indexOf(username) === -1
+      }).addClass('hidden');
+    } else {
+      $('.roomCard.hidden').removeClass('hidden')
+    }
   })
 
   // show all
@@ -753,33 +751,42 @@ function addFavoritesFilters(el) {
 
   // switch grid template
   var cols = localStorage.getItem("SE_gridTemplate")
+  if(cols) $('.list.endless_page_template').attr('data-grid', cols)
   $('.filters-favorites').on('click', '.switch-grid-tpl', function(e) {
     e.preventDefault()
-    if(!cols) cols = window.getComputedStyle(document.querySelector('.list-items-container')).getPropertyValue('--columns-count')
+    if(!cols) cols = ($('.list.endless_page_template').attr('data-grid') ? $('.list.endless_page_template').attr('data-grid') : 8)
     cols = (parseInt(cols) <= 9 ? parseInt(cols) + 1 : 1)
     updateGridColumns(cols)
   })
   
   $('.filters-favorites').on('contextmenu', '.switch-grid-tpl', function(e) {
     e.preventDefault()
-    if(!cols) cols = window.getComputedStyle(document.querySelector('.list-items-container')).getPropertyValue('--columns-count')
+    if(!cols) cols = ($('.list.endless_page_template').attr('data-grid') ? $('.list.endless_page_template').attr('data-grid') : 8)
     cols = (parseInt(cols) > 1 ? parseInt(cols) - 1 : 10)
     updateGridColumns(cols)
   })
 }
-waitForKeyElements(".favorites-page .model-list-item", filterFavoritesPageListing, false);
+waitForKeyElements(".followedPage .roomCard", filterFavoritesPageListing, false);
 function filterFavoritesPageListing(el) {
 
   if($(el).find('.filters-favorites .search input').val()) {
     let username = $(this).val().toLowerCase()
-    var filteredUsers = $('.model-list-item').show().filter(function() {
-      return $(this).find('[class^="ModelThumbUsername"]').text().toLowerCase().indexOf(username) === -1
+    var filteredUsers = $('.roomCard').show().filter(function() {
+      return $(this).find('.cardTitle>a').attr('data-room').toLowerCase().indexOf(username) === -1
     }).hide();
   }
 }
 function updateGridColumns(cols) {
   localStorage.setItem("SE_gridTemplate", cols)
-  $('.list-items-container').attr('data-grid', cols)
+  $('.list.endless_page_template').attr('data-grid', cols)
+}
+function populateCountryFilter() {
+  // populate country filter
+  setTimeout(() => {
+    $('.roomlist_container:not(.followRecommendations) .roomCard .thumbnail_flag>div>span').each(function() {
+      if(!$('.country select').find('select option[value="'+$(this).attr('title')+'"]').length) $('.country select').append('<option value="'+$(this).attr('title')+'">'+$(this).attr('title')+'</option')
+    })
+  }, 500)
 }
 
 /**
