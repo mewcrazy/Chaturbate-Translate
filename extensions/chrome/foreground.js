@@ -349,13 +349,13 @@ function addLangDropdownPrivateChats(el) {
 
     // search language by html attributes
     dm.on("keyup", ".language-search", function() {
-        var value = this.value.toLowerCase().trim();
+      var value = this.value.toLowerCase().trim();
       if(value.length) {
-        dm.find(".language-list button").show().filter(function() {
+        $(".language-list button").show().filter(function() {
             return $(this).attr("data-search").toLowerCase().trim().indexOf(value) == -1;
         }).hide();
       } else {
-        dm.find(".language-list button").show();
+        $(".language-list button").show();
       }
     });
 
@@ -656,8 +656,7 @@ function addLangDropdown(jNode) {
           var elem = $(this);
           elem.data('search',  value)
           .clearQueue().stop()
-          .delay(500)
-          // runs search
+          .delay(100)
           .queue(function() {
             $(".language-list button").show().filter(function() {
                 return $(this).attr("data-search").toLowerCase().trim().indexOf(value) == -1;
@@ -675,6 +674,11 @@ function addLangDropdown(jNode) {
         $(".language-list button").show()
       }
     });
+
+    // fix: Emoji Insert 
+    $('body').on('click', '.emojiDiv', function(e) {
+      alert("test")
+    })
 }
 
 
@@ -931,8 +935,7 @@ function populateLanguageDropdowns() {
 
   $.each(iso639_langs, function(key, val) {
     if(val.active === 1) {
-      //$('.language-list').prepend( '<button aria-label="'+val.name+'" class="SmilersWidgetSpicyList__smile#mG flag" type="button" title="'+val.name+'" data-search="'+val.name+'|'+val.nativeName+'|'+key+'" data-lang="'+key+'"><span class="fi fi-'+key+'" title="'+val.name+' ('+val.nativeName+')"></span></button>');
-      $('.language-list').prepend('<button aria-label="'+val.name+'" class="SmilersWidgetSpicyList__smile#mG flag" type="button" title="'+val.name+'" data-search="'+val.name+'|'+val.nativeName+'|'+key+'" data-lang="'+key+'"><svg class="flag flag-'+key+'"><use xlink:href="#'+key+'"></use></svg></button>')
+      $('.language-list').prepend('<button aria-label="'+val.name+'" class="flag" type="button" title="'+val.name+'" data-search="'+val.name+'|'+val.nativeName+'|'+key+'" data-lang="'+key+'"><svg class="flag flag-'+key+'"><use xlink:href="#'+key+'"></use></svg></button>')
     }
   });
 }

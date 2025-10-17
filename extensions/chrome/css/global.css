@@ -40,9 +40,9 @@ button + .se-loader { display: none; }
 /* language picker */
 .se-langpicker { position: absolute; top: 6px; left: 2px; z-index: 1; opacity: .6; cursor: pointer; text-align: center; width: 25px; height: 17px; }
 .se-langpicker:hover { opacity: 1; }
-.se-langpicker .flag { width: 25px; height: 17px; margin-top: -1px; margin-left: -1px; border: 1px solid rgba(255, 255, 255, .25); background: none; outline: 0; border: 0; }
-.se-langpicker > .flag:first-child { width: 25px; height: 17px; zoom: 80%; margin-top: 2px; margin-left: 2px; }
-.se-langpicker > svg:not(.flag):first-child { width: 15px; height: 15px; }
+.se-langpicker [class^="flag"] { width: 25px; height: 17px; margin-top: -1px; margin-left: -1px; border: 1px solid rgba(255, 255, 255, .25); background: none; outline: 0; border: 0; }
+.se-langpicker > [class^="flag"]:first-child { width: 25px; height: 17px; zoom: 80%; margin-top: 2px; margin-left: 2px; }
+.se-langpicker > svg:not([class^="flag"]):first-child { width: 15px; height: 15px; }
 .se-langpicker svg+svg { display: none !important }
 .customInput.chat-input-field, .inputFieldChatPlaceholder::before,
 .se-langpicker[data-active] + .chat-input-form .customInput.chat-input-field, .se-langpicker[data-active] + .chat-input-form .inputFieldChatPlaceholder::before { padding-left: 27px }
@@ -55,16 +55,15 @@ button + .se-loader { display: none; }
 .dmWindow .se-langpicker[data-active=""] + textarea, .dmWindow .se-langpicker + textarea { padding-left: 26px !important; }
 
 /* language chooser */
-.language-chooser { background: #17202a; bottom: 33px; right: 0; left: 0; height: 40%; position: absolute; z-index: 2; overflow: hidden }
-.language-chooser > div { height: 275px }
-.language-chooser .title-block { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 5px 10px; }
+.language-chooser { height: 275px; background: #17202a; bottom: 33px; right: 0; left: 0; position: absolute; z-index: 2; overflow: hidden }
+.language-chooser .title-block { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 15px; }
 .language-chooser .title-block h3 { color: #fff; font-size: 14px; font-weight: 400; margin: 0; }
 .language-chooser .title-block .search { flex-grow: 1 }
 .language-chooser .close { pointer-events: auto; cursor: pointer; background: 0; color: rgba(255,255,255,.6); border: 0; outline: 0; justify-self: flex-end; }
 .language-chooser .close:hover { color: #fff; }
 .language-chooser .close svg { pointer-events: none; }
-.language-list { height: 100%; overflow-y: scroll; max-height: 209px; }
-.language-list >.flag { background: none; outline: 0; border: 0; cursor: pointer; line-height: 1; margin: 5px; padding: 0; cursor: pointer; height: auto; }
+.language-list { height: 100%; overflow-y: auto; max-height: 209px; margin-right: 30px; padding: 0 8px; }
+.language-list >.flag { background: none; outline: 0; border: 0; cursor: pointer; line-height: 1; margin: 3px 7px; padding: 0; cursor: pointer; height: auto; }
 .language-list >.flag.active { border: 1px solid #fff }
 .language-list >.flag svg { background: none; width: 25px; height: 17px; padding: 3px 0; pointer-events: none; }
 .language-list .flag-ta, .language-list .flag-sa, .language-list .flag-pa, .language-list .flag-ne { background: #fff; }

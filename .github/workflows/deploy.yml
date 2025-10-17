@@ -67,7 +67,9 @@ jobs:
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
-          owner: ${{ github.repository_owner }}
+      - uses: ./actions/staging-tests
+        with:
+          token: ${{ steps.app-token.outputs.token }}
 
       # Step 8: Use Personal Access Token 
       - name: Use the token
@@ -76,7 +78,7 @@ jobs:
         run: |
           gh api octocat
 
-      # Step 7: Release pushed tag
+      # Step 9: Release pushed tag
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -90,8 +92,8 @@ jobs:
               --title="${tag#v}" \
               --generate-notes
           
-      # Step 7: Change Default Branch
-      - name: Create release
+      # Step 10: Change Default Branch
+      - name: Change Default Branch
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           tag: ${{ github.ref_name }}
