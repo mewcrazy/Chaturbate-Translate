@@ -12,10 +12,11 @@
 > [!WARNING]
 > Chaturbate Enhanced is currently in active development and is not ready to use yet. The translation feature is ready and working, the rest is not finished yet.
 
-## Planned Features:
+## Features:
 - Translate chat messages & direct messages on-the-fly in over different 100 languages with 1-click
 - Filter your favorites by country, age, private prices and more
-- Picture in Picture Mode
+- Save Chaturbate Screenshots with 1-click
+- Picture in Picture Mode & Open Fullscreen with middle click as well as double click
 - Hide distracting chat notice messages <sub style="color:rgba(255,255,255,.55)">(Tip Goals, Interactive Toy, Welcome Bot & Fan Club Discount Messages)</sub>
 - Do Not Disturb Mode <sub style="color:rgba(255,255,255,.55)">(Shows only yours and the models chat messages)</sub>
 - Hide the "Auto-Refill" feature to avoid accidental charges <sub style="color:rgba(255,255,255,.55)">(Remove tempting token buy notices)</sub>

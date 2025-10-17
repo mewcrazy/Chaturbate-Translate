@@ -372,6 +372,57 @@ function addLangDropdownPrivateChats(el) {
     })
 }
 
+/**
+ * Lifecycle: Player started
+ */
+waitForKeyElements('.vjs-has-started', showTakeScreenshotButton);
+function showTakeScreenshotButton(el) {
+  $('.se-take-screenshot').removeClass('hidden') // "Take Screenshot" Button
+  $('.se-pip').removeClass('hidden') // "Picture in Picture" Button
+}
+
+
+/**
+ * Take Screenshot
+ */
+waitForKeyElements('#satisfactionScore', addTakeScreenshot);
+function addTakeScreenshot(el) {
+  $(el).after('<div ts="N" class="se-take-screenshot sendTipButton hidden" data-testid="follow-button" style="height: 15px; width: auto; position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; display: inline; font-family: UbuntuMedium, Helvetica, Arial, sans-serif; font-size: 12px; padding: 3px 8px 2px; top: -4px; float: right; border-radius: 3px; cursor: pointer; margin-right: 5px; line-height: 1.4;"><span></span><span>SCREENSHOT</span></div>');
+
+  $('.se-take-screenshot').on('click', function(e) {
+    e.preventDefault();
+
+    let vid = $(".videoPlayerDiv video")
+    if(vid.length === 0) return
+    let canvas = document.createElement("canvas");
+    canvas.width = vid[0].videoWidth;
+    canvas.height = vid[0].videoHeight;
+    canvas.getContext("2d").drawImage(vid[0], 0, 0, vid[0].videoWidth, vid[0].videoHeight);
+    if(!canvas) return
+    let username = $('.user_information_header_username').text()
+    let link = document.createElement('a')
+    link.download = genFilename(username, '.png', new Date())
+    link.href = canvas.toDataURL()
+    link.click()
+  })
+  function genFilename(fname, ext, date) {
+    let d = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+    let t = ('0' + date.getHours()).slice(-2) + '-' + ('0' + date.getMinutes()).slice(-2) + '-' + ('0' + date.getSeconds()).slice(-2);
+    return fname + '_' + d + '_' + t + ext;
+  }
+}
+
+/**
+ * Remove Ads & Accept Terms
+ */
+document.cookie = 'noads=1; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/';
+document.cookie = 'agreeterms=1; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/';
+document.cookie = 'fromaffiliate=1; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/';
+document.cookie = 'affkey="eJxtkE0OwiAQha9C2MymTVraGsPexGtUCkYtkQDGNE3vLo9I6sIV37z5ecysPHLJ+LV3mleMK+sQnu8n+0Yc/QPxpM34miMUjxgwGgO04xx10P7yXBbIuV+Awm0qtRlEI4a6ber2wEQnh072x2y5lwWvCpr8rZWSC0lGvy5UMZog/hmIXPJFFugLpMkFXQKR3rQapO9qyKi9MQJwlKxb9FA+Cm18+wBS3UxH"; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/';
+document.cookie = 'noads=1; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; domain=.chaturbate.com';
+document.cookie = 'agreeterms=1; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; domain=.chaturbate.com';
+document.cookie = 'fromaffiliate=1; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; domain=.chaturbate.com';
+document.cookie = 'affkey="eJxtkE0OwiAQha9C2MymTVraGsPexGtUCkYtkQDGNE3vLo9I6sIV37z5ecysPHLJ+LV3mleMK+sQnu8n+0Yc/QPxpM34miMUjxgwGgO04xx10P7yXBbIuV+Awm0qtRlEI4a6ber2wEQnh072x2y5lwWvCpr8rZWSC0lGvy5UMZog/hmIXPJFFugLpMkFXQKR3rQapO9qyKi9MQJwlKxb9FA+Cm18+wBS3UxH"; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; domain=.chaturbate.com';
 
 /**
  * Do Not Disturb Mode
@@ -429,7 +480,7 @@ function videoAddPip(el) {
   });
 
   // pip
-  $(el).next().append('<div class="se-pip hover-btn drop-shadow-container" aria-label="Theater Mode" data-listener-count-pointerenter="3" data-listener-count-pointerleave="3" ts="_" id="theater-mode-icon" data-listener-count-click="1" style="display: inline-flex; position: relative; align-items: center; justify-content: center; min-width: 32px; user-select: none; pointer-events: auto;"><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pip"><path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5zM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z" fill="#fff"/><path d="M8 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5z" fill="#fff"/></svg><div class="no-drop-shadow video-controls-tooltip" ts="N" style="position: absolute; display: block; opacity: 0; bottom: calc(100% + 5px); left: 50%; transform: translateX(-50%); border-radius: 4px; background-color: rgba(0, 0, 0, 0.92); padding: 8px 16px; text-align: center; font-size: 13px; color: rgb(255, 255, 255); width: max-content; max-width: 150px; transition: inherit; pointer-events: none; visibility: hidden;"><p style="display: inline;">Theater Mode</p></div></div>')
+  $(el).next().append('<div class="se-pip hover-btn drop-shadow-container hidden" aria-label="Theater Mode" data-listener-count-pointerenter="3" data-listener-count-pointerleave="3" ts="_" id="theater-mode-icon" data-listener-count-click="1" style="display: inline-flex; position: relative; align-items: center; justify-content: center; min-width: 32px; user-select: none; pointer-events: auto;"><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pip"><path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5zM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z" fill="#fff"/><path d="M8 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5z" fill="#fff"/></svg><div class="no-drop-shadow video-controls-tooltip" ts="N" style="position: absolute; display: block; opacity: 0; bottom: calc(100% + 5px); left: 50%; transform: translateX(-50%); border-radius: 4px; background-color: rgba(0, 0, 0, 0.92); padding: 8px 16px; text-align: center; font-size: 13px; color: rgb(255, 255, 255); width: max-content; max-width: 150px; transition: inherit; pointer-events: none; visibility: hidden;"><p style="display: inline;">Theater Mode</p></div></div>')
   $('.se-pip').on('click', function(e) {
     $(this).attr('disabled', true)
     openPip(document.getElementsByClassName('vjs-tech')[0])

@@ -143,6 +143,9 @@ button + .se-loader { display: none; }
 .se-add-message .icon-add { width: 30px; height: 30px; fill: #141414; }
 .se-add-message:hover .icon-add { fill: #000; }
 
+/* take screenshot */
+.se-take-screenshot { margin-right: 5px; }
+
 /* minor fixes */
 #sendTipButton { max-width: auto !important; }
 
