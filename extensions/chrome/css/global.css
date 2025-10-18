@@ -64,16 +64,20 @@ button + .se-loader { display: none; }
 .language-chooser .close { pointer-events: auto; cursor: pointer; background: 0; color: rgba(255,255,255,.6); border: 0; outline: 0; justify-self: flex-end; }
 .language-chooser .close:hover { color: #fff; }
 .language-chooser .close svg { pointer-events: none; }
-.language-list { height: 100%; overflow-y: auto; max-height: 209px; margin-right: 30px; padding: 0 8px; }
+.language-list { height: 100%; overflow-y: auto; max-height: 209px; margin-right: 21ppx; padding: 0 8px; }
 .language-list >.flag { background: none; outline: 0; border: 0; cursor: pointer; line-height: 1; margin: 3px 7px; padding: 0; cursor: pointer; height: auto; }
 .language-list >.flag.active { border: 1px solid #fff }
 .language-list >.flag svg { background: none; width: 25px; height: 17px; padding: 3px 0; pointer-events: none; }
 .language-list .flag-ta, .language-list .flag-sa, .language-list .flag-pa, .language-list .flag-ne { background: #fff; }
 .input.language-search { background: rgba(0,0,0,.2); padding: 10px 15px; height: 30px; border-radius: 15px; color: #fff; }
 .input.language-search:hover { background: rgba(0,0,0,1) }
+.FullvideoChatDivChat .language-list { margin-right: 0; }
+#TheaterModePlayer .videoPlayerDiv { width: 100% !important }
+
 
 /* language chooser: direct messages */
 .dmWindow .language-chooser { bottom: 0; height: 100%; }
+.messenger-chats .se-langpicker { position: absolute; bottom: 19px; left: 18px; z-index: 2; }
 
 /* translate topic */
 .RoomSubjectSpan { width: auto !important; }

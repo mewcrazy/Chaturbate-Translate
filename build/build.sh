@@ -1,14 +1,20 @@
 #!/bin/bash
 
+# Download npm dependencies
+npm i jquery javascript-obfuscator
+npm audit fix --force
+
 # Download waitForKeyElements.js & move to ~/deploy/
 git clone https://github.com/CoeJoder/waitForKeyElements.js.git git_waitForKeyElements
 mv -f git_waitForKeyElements/waitForKeyElements.js extensions/chrome/js/waitForKeyElements.min.js
 
 # Download jquery/jquery & Move to directory
-npm i jquery
-npm audit fix --force
 rm extensions/chrome/js/jquery.min.js
 cp -rf ../../../../node_modules/jquery/dist/jquery.min.js extensions/chrome/js/jquery.min.js
+
+# Obfuscate JavaScript files
+# ./../../../../node_modules/javascript-obfuscator/bin/javascript-obfuscator extensions/chrome/foreground.js --output extensions/chrome/foreground-obfuscated.js
+# rm extensions/chrome/foreground.js
 
 # Build .crx Chrome Extension File
 /usr/local/bin/crx3 extensions/chrome -o extensions/chrome.crx -p /home/githubrunner/extension_keys/chrome.pem

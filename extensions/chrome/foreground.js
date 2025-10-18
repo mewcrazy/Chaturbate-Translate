@@ -26,27 +26,27 @@ function moveBottomTabs(el) {
 
   // add tabnav items
   $(el).before('<div ts="bi" class="tab chatAreaTabColor chat-tab-handle goto-custom-tab" data-tab="bio" id="bio-tab-default" data-paction-name="BIO" style="position: static; padding: 3px 8px; margin: 2px 2px 0px; border-radius: 4px 4px 0px 0px; min-width: 16px; width: auto; height: 100%; font-size: 12px; cursor: pointer; float: left; text-size-adjust: none; user-select: none; line-height: 1.2; display: inline-block;"><span><span data-paction-name="BIO" style="vertical-align: top;">BIO</span></span></div>')
-  $(el).before('<div ts="pv" class="tab chatAreaTabColor chat-tab-handle goto-custom-tab" data-tab="more" id="pics-tab-default" data-paction-name="PICS & VIDEOS" style="position: static; padding: 3px 8px; margin: 2px 2px 0px; border-radius: 4px 4px 0px 0px; min-width: 16px; width: auto; height: 100%; font-size: 12px; cursor: pointer; float: left; text-size-adjust: none; user-select: none; line-height: 1.2; display: inline-block;"><span><span data-paction-name="PICS & VIDEOS" style="vertical-align: top;">Pics & Videos</span></span></div>')
-  $(el).before('<div ts="mo" class="tab chatAreaTabColor chat-tab-handle goto-custom-tab" data-tab="pics" id="more-tab-default" data-paction-name="MORE" style="position: static; padding: 3px 8px; margin: 2px 2px 0px; border-radius: 4px 4px 0px 0px; min-width: 16px; width: auto; height: 100%; font-size: 12px; cursor: pointer; float: left; text-size-adjust: none; user-select: none; line-height: 1.2; display: inline-block;"><span><span data-paction-name="MORE" style="vertical-align: top;">More</span></span></div>')
-  $(el).before('<div ts="sh" class="tab chatAreaTabColor chat-tab-handle goto-custom-tab" data-tab="share" id="share-tab-default" data-paction-name="SHARE" style="position: static; padding: 3px 8px; margin: 2px 2px 0px; border-radius: 4px 4px 0px 0px; min-width: 16px; width: auto; height: 100%; font-size: 12px; cursor: pointer; float: left; text-size-adjust: none; user-select: none; line-height: 1.2; display: inline-block;"><span><span data-paction-name="SHARE" style="vertical-align: top;">Share</span></span></div>')
+  //$(el).before('<div ts="pv" class="tab chatAreaTabColor chat-tab-handle goto-custom-tab" data-tab="more" id="pics-tab-default" data-paction-name="PICS & VIDEOS" style="position: static; padding: 3px 8px; margin: 2px 2px 0px; border-radius: 4px 4px 0px 0px; min-width: 16px; width: auto; height: 100%; font-size: 12px; cursor: pointer; float: left; text-size-adjust: none; user-select: none; line-height: 1.2; display: inline-block;"><span><span data-paction-name="PICS & VIDEOS" style="vertical-align: top;">Pics & Videos</span></span></div>')
+  //$(el).before('<div ts="mo" class="tab chatAreaTabColor chat-tab-handle goto-custom-tab" data-tab="pics" id="more-tab-default" data-paction-name="MORE" style="position: static; padding: 3px 8px; margin: 2px 2px 0px; border-radius: 4px 4px 0px 0px; min-width: 16px; width: auto; height: 100%; font-size: 12px; cursor: pointer; float: left; text-size-adjust: none; user-select: none; line-height: 1.2; display: inline-block;"><span><span data-paction-name="MORE" style="vertical-align: top;">More</span></span></div>')
+  //$(el).before('<div ts="sh" class="tab chatAreaTabColor chat-tab-handle goto-custom-tab" data-tab="share" id="share-tab-default" data-paction-name="SHARE" style="position: static; padding: 3px 8px; margin: 2px 2px 0px; border-radius: 4px 4px 0px 0px; min-width: 16px; width: auto; height: 100%; font-size: 12px; cursor: pointer; float: left; text-size-adjust: none; user-select: none; line-height: 1.2; display: inline-block;"><span><span data-paction-name="SHARE" style="vertical-align: top;">Share</span></span></div>')
 
   // add tabs
-  $('#tab-row + .window').append('<div class="se-tab se-tab-bio" data-tab="bio" ts="bi" style="height: 100%; width: 100%; position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; display: block;"><div style="display: flex; flex-direction: column; height: 100%;"><div ts="D" style="width: 100%; position: static; overflow: auto scroll; -webkit-tap-highlight-color: transparent; box-sizing: border-box; padding: 11px; font-size: 12px; flex: 1 1 0%; margin: 0px;">Bio</div></div></div>')
-  $('#tab-row + .window').append('<div class="se-tab se-tab-pics" data-tab="more" ts="bi" style="height: 100%; width: 100%; position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; display: block;"><div style="display: flex; flex-direction: column; height: 100%;"><div ts="D" style="width: 100%; position: static; overflow: auto scroll; -webkit-tap-highlight-color: transparent; box-sizing: border-box; padding: 11px; font-size: 12px; flex: 1 1 0%; margin: 0px;">Pics</div></div></div>')
-  $('#tab-row + .window').append('<div class="se-tab se-tab-more" data-tab="pics" ts="bi" style="height: 100%; width: 100%; position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; display: block;"><div style="display: flex; flex-direction: column; height: 100%;"><div ts="D" style="width: 100%; position: static; overflow: auto scroll; -webkit-tap-highlight-color: transparent; box-sizing: border-box; padding: 11px; font-size: 12px; flex: 1 1 0%; margin: 0px;">More</div></div></div>')
-  $('#tab-row + .window').append('<div class="se-tab se-tab-share" data-tab="share" ts="bi" style="height: 100%; width: 100%; position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; display: block;"><div style="display: flex; flex-direction: column; height: 100%;"><div ts="D" style="width: 100%; position: static; overflow: auto scroll; -webkit-tap-highlight-color: transparent; box-sizing: border-box; padding: 11px; font-size: 12px; flex: 1 1 0%; margin: 0px;">Share</div></div></div>')
+  $('#ChatTabContainer #tab-row + .window').append('<div class="se-tab se-tab-bio" data-tab="bio" ts="bi" style="height: 100%; width: 100%; position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; display: block;"><div style="display: flex; flex-direction: column; height: 100%;"><div ts="D" style="width: 100%; position: static; overflow: auto scroll; -webkit-tap-highlight-color: transparent; box-sizing: border-box; padding: 11px; font-size: 12px; flex: 1 1 0%; margin: 0px;">Bio</div></div></div>')
+  //$('#ChatTabContainer #tab-row + .window').append('<div class="se-tab se-tab-pics" data-tab="more" ts="bi" style="height: 100%; width: 100%; position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; display: block;"><div style="display: flex; flex-direction: column; height: 100%;"><div ts="D" style="width: 100%; position: static; overflow: auto scroll; -webkit-tap-highlight-color: transparent; box-sizing: border-box; padding: 11px; font-size: 12px; flex: 1 1 0%; margin: 0px;">Pics</div></div></div>')
+  //$('#ChatTabContainer #tab-row + .window').append('<div class="se-tab se-tab-more" data-tab="pics" ts="bi" style="height: 100%; width: 100%; position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; display: block;"><div style="display: flex; flex-direction: column; height: 100%;"><div ts="D" style="width: 100%; position: static; overflow: auto scroll; -webkit-tap-highlight-color: transparent; box-sizing: border-box; padding: 11px; font-size: 12px; flex: 1 1 0%; margin: 0px;">More</div></div></div>')
+  //$('#ChatTabContainer #tab-row + .window').append('<div class="se-tab se-tab-share" data-tab="share" ts="bi" style="height: 100%; width: 100%; position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; display: block;"><div style="display: flex; flex-direction: column; height: 100%;"><div ts="D" style="width: 100%; position: static; overflow: auto scroll; -webkit-tap-highlight-color: transparent; box-sizing: border-box; padding: 11px; font-size: 12px; flex: 1 1 0%; margin: 0px;">Share</div></div></div>')
 
   $('.se-tab-bio>div>div').html($('#BioContents').html())
-  $('.se-tab-pics>div>div').html($('#PhotoVideos').html())
-  $('.se-tab-more>div>div').html($('#MoreRooms').html())
-  $('.se-tab-share>div>div').html($('#shareTab').html())
+  //$('.se-tab-pics>div>div').html($('#PhotoVideos').html())
+  //$('.se-tab-more>div>div').html($('#MoreRooms').html())
+  //$('.se-tab-share>div>div').html($('#shareTab').html())
 
   // regular tabs
   $('.chat-tab-handle:not(.goto-custom-tab,.active)').on('click', function(e) {
-    $('#tab-row>*').removeClass('active')
+    $('#ChatTabContainer #tab-row>*').removeClass('active')
     $(this).addClass('active')
     $('.se-tab').hide()
-    $('#tab-row+.window>*').eq(($(this).index() >= 2 ? $(this).index()-1 : $(this).index())).show()
+    $('#ChatTabContainer #tab-row+.window>*').eq(($(this).index() >= 2 ? $(this).index()-1 : $(this).index())).show()
   })
 
   // custom tabs
@@ -54,10 +54,9 @@ function moveBottomTabs(el) {
     e.preventDefault
     e.stopImmediatePropagation
     e.stopPropagation
-    $('#tab-row>*').removeClass('active')
-    $('#tab-row+.window>*').hide()
+    $('#ChatTabContainer #tab-row>*').removeClass('active')
+    $('#ChatTabContainer #tab-row+.window>*').hide()
     $(this).addClass('active')
-    alert("ok open "+$(this).attr('data-tab'))
     $('.window [data-tab="'+$(this).attr('data-tab')+'"]').show()
   })
 }
@@ -608,6 +607,7 @@ function addLangDropdown(jNode) {
           e.stopImmediatePropagation()
           e.stopPropagation()
           $('.language-chooser').addClass("hidden")
+          let submitButton = $(this).parent().parent().find('.SendButton')
 
           if($('.se-langpicker').attr('data-active')) {
 
@@ -622,11 +622,11 @@ function addLangDropdown(jNode) {
                 $(this).val('').focus()
                 document.execCommand('insertText', false, trans)
                 modelChatInput.text(trans)
-                $(this).closest('.inputDiv').find('.SendButton').click()
+                submitButton.click()
               });
           } else {
               // no translation needed
-              $(this).closest('.inputDiv').find('.SendButton').click()
+              submitButton.click()
           }
           $('.se-loader-line').remove()
         }
@@ -654,11 +654,11 @@ function addLangDropdown(jNode) {
       
       // add all languages
       populateLanguageDropdowns()
+    })
       
-      // close language chooser
-      $('.language-chooser').on('click', '.close', function(e) {
-        $('.language-chooser').addClass("hidden")
-      })
+    // close language chooser
+    $('.window').off().on('click', '.close', function() {
+      $(this).closest('.language-chooser').addClass("hidden")
     })
 
     // reset language on right click
@@ -974,10 +974,10 @@ function decodeHtml(html) {
 
 // populate languages to dropdowns and language lists
 function populateLanguageDropdowns() {
-
-  $.each(iso639_langs, function(key, val) {
-    if(val.active === 1) {
-      $('.language-list').prepend('<button aria-label="'+val.name+'" class="flag" type="button" title="'+val.name+'" data-search="'+val.name+'|'+val.nativeName+'|'+key+'" data-lang="'+key+'"><svg class="flag flag-'+key+'"><use xlink:href="#'+key+'"></use></svg></button>')
-    }
-  });
+  if($('.language-list').empty())
+    $.each(iso639_langs, function(key, val) {
+      if(val.active === 1 && !$('.language-list.flag-'+val.name).length) {
+        $('.language-list').prepend('<button aria-label="'+val.name+'" class="flag flag-'+val.name+'" type="button" title="'+val.name+'" data-search="'+val.name+'|'+val.nativeName+'|'+key+'" data-lang="'+key+'"><svg class="flag flag-'+key+'"><use xlink:href="#'+key+'"></use></svg></button>')
+      }
+    })
 }

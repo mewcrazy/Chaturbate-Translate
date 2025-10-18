@@ -6,7 +6,7 @@
 </p>
 
 <p align="center" width="100%">
-    <a href="https://chaturbate.com/in/?tour=g4pe&campaign=HjEmw&track=default" target="_blank><img width="100%" src="https://github.com/mewcrazy/Chaturbate-Enhanced/raw/main/img/github-intro-animation.gif"></a>
+    <a href="https://chaturbate.com/in/?tour=g4pe&campaign=HjEmw&track=default" target="_blank"><img width="830" src="https://github.com/mewcrazy/Chaturbate-Enhanced/raw/main/img/github-intro-animation.gif"></a>
 </p>
 
 > [!WARNING]
