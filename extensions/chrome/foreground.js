@@ -237,7 +237,7 @@ function hideChatUsers(el) {
       })
 
       // DND Mode (filter everything else)
-      if($('.switch-dnd-mode input[type="checkbox"]').is(':checked')) {
+      if(localStorage.getItem('SE_dndMode') === "1") {
         $(el).find('[data-testid="chat-message"]').slice(-50).each(function(index, item) {
           if(
             $(this).find('[data-testid="username"]').text() != username && $(this).find('[data-testid="username"]').text() != usernameModel
@@ -471,12 +471,15 @@ document.cookie = 'affkey="eJxtkE0OwiAQha9C2MymTVraGsPexGtUCkYtkQDGNE3vLo9I6sIV3
 /**
  * Do Not Disturb Mode
  */
-waitForKeyElements('#settings-tab-default', addDefaultEmojis);
+waitForKeyElements('#tab-row', addDefaultEmojis);
 function addDefaultEmojis(el) {
-  let tabNav = $(el).closest('#tab-nav')
 
   // append dnd toggle
-  $(el).after('<div class="se-switcher switch-dnd-mode"><span>DND Mode</span><div class="toggle"><input type="checkbox" id="mode-toggle" class="toggle__input"><label for="mode-toggle" class="toggle__label"></label></div></div>')
+  $(el).append('<div class="se-switcher switch-dnd-mode"><span>DND Mode</span><div class="toggle"><input name="SE_dndMode" type="checkbox" id="mode-toggle" value="1" class="toggle__input"><label for="mode-toggle" class="toggle__label"></label></div></div>')
+  if(localStorage.getItem('SE_dndMode') === "1") {
+    $('.switch-dnd-mode .switcher').toggleClass("on")
+    $('.switch-dnd-mode input[type="checkbox"]').prop('checked', true)
+  }
 }
 
 
@@ -940,6 +943,7 @@ waitForKeyElements('#main.chat_room', addBodyShit);
 function addBodyShit(el) {
 
   $(el).on('click', '.se-switcher', function(e) {
+    localStorage.setItem($(this).find('input').attr('name'), $(this).find('input').val())
     $(this).toggleClass("on")
     $(this).find('input').prop('checked', function (i, val) {
       return !val;

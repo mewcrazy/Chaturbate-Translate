@@ -1,5 +1,5 @@
 # <p align="center">Chaturbate Enhanced</p>
-<p align="center">A browser extension to extend Chaturbate with new useful features like on-the-fly translations of your sent text message as well as received public chat and private chat messages, and many more features.</p>
+<p align="center">A browser extension to extend Chaturbate with new useful features like On-The-Fly Translations of your sent and received chat messages, Do Not Disturb Mode, Message Templates, Improved Filtering for Followed Cams, and many more features.</p>
 
 <p align="center" width="100%">
   <a href="https://github.com/mewcrazy/Chaturbate-Enhanced/archive/refs/heads/main.zip"><img src="https://shields.io/github/downloads/mewcrazy/Chaturbate-Enhanced/total"></a>
@@ -14,7 +14,8 @@
 
 ## Features:
 - Translate chat messages & direct messages on-the-fly in over different 100 languages with 1-click
-- Filter your favorites by country, age, private prices and more
+- Chat Message Templates (no need to type everything again and again)
+- Filter your followed rooms by country, age, private prices and more
 - Save Chaturbate Screenshots with 1-click
 - Picture in Picture Mode & Open Fullscreen with middle click as well as double click
 - Hide distracting chat notice messages <sub style="color:rgba(255,255,255,.55)">(Tip Goals, Interactive Toy, Welcome Bot & Fan Club Discount Messages)</sub>
@@ -180,6 +181,7 @@ We welcome any contributions! If you're having ideas or improvements to Chaturba
 
 Thanks to [PotPlayer](https://potplayer.info) for the innovative idea of opening a video in fullscreen with a simple middle mouse click.
 Thanks to [Wiktionary](https://en.wiktionary.org/wiki/Wiktionary:Language_flags_list) for the curated list of language flags.
+Thanks to [Chaturbate Enhancer](https://cb-enh.improper.dev/) for giving us some final inspirational changes.
 
 ---
 
