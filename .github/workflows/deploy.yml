@@ -64,19 +64,11 @@ jobs:
       # Step 7: Change Default Branch
       - name: Change Default Branch
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh api repos/mewcrazy/Chaturbate-Enhanced --method PATCH --field 'default_branch=$tag' --silent
 
-      # Step 8: Generate a token
-      - name: Generate a token
-        id: generate_token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.APP_ID }}
-          private-key: ${{ secrets.APP_PRIVATE_KEY }}
-
-      # Step 9: Release pushed tag
+      # Step 8: Release pushed tag
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
