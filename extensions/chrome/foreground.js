@@ -19,6 +19,51 @@ var htmlEnhancedOptions = chrome.runtime.getURL('html/enhanced-options.html')
 
 
 /**
+ * Move Bottom Tabs to Top Tab Bar
+ */
+waitForKeyElements("#settings-tab-default", moveBottomTabs, false);
+function moveBottomTabs(el) {
+
+  // add tabnav items
+  $(el).before('<div ts="bi" class="tab chatAreaTabColor chat-tab-handle goto-custom-tab" data-tab="bio" id="bio-tab-default" data-paction-name="BIO" style="position: static; padding: 3px 8px; margin: 2px 2px 0px; border-radius: 4px 4px 0px 0px; min-width: 16px; width: auto; height: 100%; font-size: 12px; cursor: pointer; float: left; text-size-adjust: none; user-select: none; line-height: 1.2; display: inline-block;"><span><span data-paction-name="BIO" style="vertical-align: top;">BIO</span></span></div>')
+  $(el).before('<div ts="pv" class="tab chatAreaTabColor chat-tab-handle goto-custom-tab" data-tab="more" id="pics-tab-default" data-paction-name="PICS & VIDEOS" style="position: static; padding: 3px 8px; margin: 2px 2px 0px; border-radius: 4px 4px 0px 0px; min-width: 16px; width: auto; height: 100%; font-size: 12px; cursor: pointer; float: left; text-size-adjust: none; user-select: none; line-height: 1.2; display: inline-block;"><span><span data-paction-name="PICS & VIDEOS" style="vertical-align: top;">Pics & Videos</span></span></div>')
+  $(el).before('<div ts="mo" class="tab chatAreaTabColor chat-tab-handle goto-custom-tab" data-tab="pics" id="more-tab-default" data-paction-name="MORE" style="position: static; padding: 3px 8px; margin: 2px 2px 0px; border-radius: 4px 4px 0px 0px; min-width: 16px; width: auto; height: 100%; font-size: 12px; cursor: pointer; float: left; text-size-adjust: none; user-select: none; line-height: 1.2; display: inline-block;"><span><span data-paction-name="MORE" style="vertical-align: top;">More</span></span></div>')
+  $(el).before('<div ts="sh" class="tab chatAreaTabColor chat-tab-handle goto-custom-tab" data-tab="share" id="share-tab-default" data-paction-name="SHARE" style="position: static; padding: 3px 8px; margin: 2px 2px 0px; border-radius: 4px 4px 0px 0px; min-width: 16px; width: auto; height: 100%; font-size: 12px; cursor: pointer; float: left; text-size-adjust: none; user-select: none; line-height: 1.2; display: inline-block;"><span><span data-paction-name="SHARE" style="vertical-align: top;">Share</span></span></div>')
+
+  // add tabs
+  $('#tab-row + .window').append('<div class="se-tab se-tab-bio" data-tab="bio" ts="bi" style="height: 100%; width: 100%; position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; display: block;"><div style="display: flex; flex-direction: column; height: 100%;"><div ts="D" style="width: 100%; position: static; overflow: auto scroll; -webkit-tap-highlight-color: transparent; box-sizing: border-box; padding: 11px; font-size: 12px; flex: 1 1 0%; margin: 0px;">Bio</div></div></div>')
+  $('#tab-row + .window').append('<div class="se-tab se-tab-pics" data-tab="more" ts="bi" style="height: 100%; width: 100%; position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; display: block;"><div style="display: flex; flex-direction: column; height: 100%;"><div ts="D" style="width: 100%; position: static; overflow: auto scroll; -webkit-tap-highlight-color: transparent; box-sizing: border-box; padding: 11px; font-size: 12px; flex: 1 1 0%; margin: 0px;">Pics</div></div></div>')
+  $('#tab-row + .window').append('<div class="se-tab se-tab-more" data-tab="pics" ts="bi" style="height: 100%; width: 100%; position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; display: block;"><div style="display: flex; flex-direction: column; height: 100%;"><div ts="D" style="width: 100%; position: static; overflow: auto scroll; -webkit-tap-highlight-color: transparent; box-sizing: border-box; padding: 11px; font-size: 12px; flex: 1 1 0%; margin: 0px;">More</div></div></div>')
+  $('#tab-row + .window').append('<div class="se-tab se-tab-share" data-tab="share" ts="bi" style="height: 100%; width: 100%; position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; display: block;"><div style="display: flex; flex-direction: column; height: 100%;"><div ts="D" style="width: 100%; position: static; overflow: auto scroll; -webkit-tap-highlight-color: transparent; box-sizing: border-box; padding: 11px; font-size: 12px; flex: 1 1 0%; margin: 0px;">Share</div></div></div>')
+
+  $('.se-tab-bio>div>div').html($('#BioContents').html())
+  $('.se-tab-pics>div>div').html($('#PhotoVideos').html())
+  $('.se-tab-more>div>div').html($('#MoreRooms').html())
+  $('.se-tab-share>div>div').html($('#shareTab').html())
+
+  // regular tabs
+  $('.chat-tab-handle:not(.goto-custom-tab,.active)').on('click', function(e) {
+    $('#tab-row>*').removeClass('active')
+    $(this).addClass('active')
+    $('.se-tab').hide()
+    $('#tab-row+.window>*').eq(($(this).index() >= 2 ? $(this).index()-1 : $(this).index())).show()
+  })
+
+  // custom tabs
+  $('.goto-custom-tab').on('click', function(e) {
+    e.preventDefault
+    e.stopImmediatePropagation
+    e.stopPropagation
+    $('#tab-row>*').removeClass('active')
+    $('#tab-row+.window>*').hide()
+    $(this).addClass('active')
+    alert("ok open "+$(this).attr('data-tab'))
+    $('.window [data-tab="'+$(this).attr('data-tab')+'"]').show()
+  })
+}
+
+
+/**
  * Save Player Volume
  */
 waitForKeyElements("#TheaterModePlayer .vjs-tech", savePlayerVolume, false);
@@ -91,7 +136,6 @@ function processOption(name, val) {
 
   switch(name) {
     case "SE_optionDisableAutoRefill":
-      alert("hm")
       $('fieldset.auto-refill-fieldset').addClass('hidden')
       break;
     case "SE_optionEnableTranslations":
@@ -122,11 +166,11 @@ function addMessageTemplates(el) {
     if($(this).closest('.ChatTabContents').find('.se-message-templates').length) {
       $('.se-message-templates').toggleClass('hidden')
     } else {
-      $('.msg-list-wrapper-split').append('<div class="se-message-templates"><div class="title-block"><h3>Templates</h3><span class="se-add-message add-icon-wrapper"><svg class="icon icon-add"><use xlink:href="#icons-add"></use></svg></span><div class="search"><input class="ModelSearch__input#st inline-block input text-default theme-default se-msg-tpl-search" name="s" type="search" value="" placeholder="Search message templates ..."></div><button type="button" class="se-close-message-tpl SmilesWidgetContainer__closeBtn#GV" title="Close Languages"><svg style="height:20px;width:20px" class="IconV2__icon#YR" viewBox="0 0 24 24"><path fill="currentColor" d="M20.027 3.985a1.27 1.27 0 0 0-1.796 0L12 10.203l-6.23-6.23a1.27 1.27 0 0 0-1.797 0 1.27 1.27 0 0 0 0 1.796L10.203 12l-6.23 6.23a1.27 1.27 0 0 0 0 1.797c.497.497 1.3.497 1.796 0L12 13.797l6.23 6.23c.498.497 1.3.497 1.797 0s.497-1.3 0-1.796L13.797 12l6.23-6.23c.485-.485.485-1.3 0-1.785"/></svg></button></div><ul class="se-messages-tpl-list"></ul><span class="empty hidden">You haven\'t added any messages yet</span><span class="no-results hidden">No messages found.</span></div>')
+      $('.msg-list-wrapper-split').append('<div class="se-message-templates"><div class="title-block"><h3>Templates</h3><span class="se-add-message add-icon-wrapper"><svg class="icon icon-add"><use xlink:href="#icons-add"></use></svg></span><div class="add hidden"><input type="text" value="" placeholder="Your Text"></div><div class="search"><input class="inline-block input text-default theme-default se-msg-tpl-search" name="s" type="search" value="" placeholder="Search message templates ..."></div><button type="button" class="se-close-message-tpl SmilesWidgetContainer__closeBtn#GV" title="Close Languages"><svg style="height:20px;width:20px" class="IconV2__icon#YR" viewBox="0 0 24 24"><path fill="currentColor" d="M20.027 3.985a1.27 1.27 0 0 0-1.796 0L12 10.203l-6.23-6.23a1.27 1.27 0 0 0-1.797 0 1.27 1.27 0 0 0 0 1.796L10.203 12l-6.23 6.23a1.27 1.27 0 0 0 0 1.797c.497.497 1.3.497 1.796 0L12 13.797l6.23 6.23c.498.497 1.3.497 1.797 0s.497-1.3 0-1.796L13.797 12l6.23-6.23c.485-.485.485-1.3 0-1.785"/></svg></button></div><ul class="se-messages-tpl-list"></ul><span class="empty hidden">You haven\'t added any messages yet</span><span class="no-results hidden">No messages found.</span></div>')
 
       // fetch & insert templates
       let templates = [
-        "Lorem ipsum dolor amet Lorem ipsum dolor amet Lorem ipsum dolor amet2.",
+        "Want to talk in their language? Try the Chaturbate Enhanced browser extension. See my bio.",
         "Lorem ipsum dolor amet Lorem ipsum dolor amet Lorem ipsum dolor amet2.",
         "Lorem ipsum dolor amet Lorem ipsum dolor amet Lorem ipsum dolor amet3.",
         "Lorem ipsum dolor amet Lorem ipsum dolor amet Lorem ipsum dolor amet4."
@@ -141,8 +185,8 @@ function addMessageTemplates(el) {
       }
 
       // click message
-      $('.se-add-message').off().on('click', function() {
-        alert("add message")
+      $('.se-add-message').off().on('click', function(e) {
+        $(this).next('.add').removeClass("hidden")
       })
 
       // click message
@@ -399,7 +443,7 @@ function addTakeScreenshot(el) {
     canvas.height = vid[0].videoHeight;
     canvas.getContext("2d").drawImage(vid[0], 0, 0, vid[0].videoWidth, vid[0].videoHeight);
     if(!canvas) return
-    let username = $('.user_information_header_username').text()
+    let username = $('.activeRoom').text().split("'")[0].toLowerCase()
     let link = document.createElement('a')
     link.download = genFilename(username, '.png', new Date())
     link.href = canvas.toDataURL()
@@ -408,7 +452,7 @@ function addTakeScreenshot(el) {
   function genFilename(fname, ext, date) {
     let d = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
     let t = ('0' + date.getHours()).slice(-2) + '-' + ('0' + date.getMinutes()).slice(-2) + '-' + ('0' + date.getSeconds()).slice(-2);
-    return fname + '_' + d + '_' + t + ext;
+    return fname + '__' + d + '_' + t + ext;
   }
 }
 
@@ -423,6 +467,7 @@ document.cookie = 'noads=1; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; domai
 document.cookie = 'agreeterms=1; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; domain=.chaturbate.com';
 document.cookie = 'fromaffiliate=1; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; domain=.chaturbate.com';
 document.cookie = 'affkey="eJxtkE0OwiAQha9C2MymTVraGsPexGtUCkYtkQDGNE3vLo9I6sIV37z5ecysPHLJ+LV3mleMK+sQnu8n+0Yc/QPxpM34miMUjxgwGgO04xx10P7yXBbIuV+Awm0qtRlEI4a6ber2wEQnh072x2y5lwWvCpr8rZWSC0lGvy5UMZog/hmIXPJFFugLpMkFXQKR3rQapO9qyKi9MQJwlKxb9FA+Cm18+wBS3UxH"; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; domain=.chaturbate.com';
+
 
 /**
  * Do Not Disturb Mode
@@ -465,17 +510,17 @@ function addTransButtonCamGroup(el) {
 /**
  * Picture in Picture
  */
-waitForKeyElements(".theater-overlay", videoAddPip, false);
+waitForKeyElements(".theater-overlay", videoAddPip);
 function videoAddPip(el) {
 
   // midclick fullscreen
-  $('#TheaterModePlayer').off().on('mousedown', 'video,.vjs-tech', function(e) {
+  $('#TheaterModePlayer').on('mousedown', 'video,.vjs-tech', function(e) {
     if(e.which === 2) {
       e.preventDefault();
       toggleFullscreen(document.getElementsByClassName('vjs-tech')[0])
     }
   });
-  $('#TheaterModePlayer').off().on('dblclick', 'video,.vjs-tech', function(e) {
+  $('#TheaterModePlayer').on('dblclick', 'video,.vjs-tech', function(e) {
     toggleFullscreen(document.getElementsByClassName('vjs-tech')[0])
   });
 
@@ -573,25 +618,23 @@ function addLangDropdown(jNode) {
               }
               
               translateGoogle($(this).val(), $('.se-langpicker').attr('data-active').toLowerCase(), $('.msg-list-wrapper-split')).then((data) => {
-                console.log($('.BaseTabsContainer .SendButton').length, data)
                 let trans = decodeHtml(data.data.translations[0].translatedText)
                 $(this).val('').focus()
                 document.execCommand('insertText', false, trans)
                 modelChatInput.text(trans)
-                $('.BaseTabsContainer .SendButton').click()
-                $(this).val('').focus()
+                $(this).closest('.inputDiv').find('.SendButton').click()
               });
           } else {
               // no translation needed
-              $('.BaseTabsContainer .SendButton').click()
-              $(this).val('').focus()
+              $(this).closest('.inputDiv').find('.SendButton').click()
           }
           $('.se-loader-line').remove()
         }
     })
 
+
     // hide language chooser on send button && smiles button click
-    $('.SendButton.chat').on('click', () => { $('.language-chooser').addClass("hidden") })
+    $('.SendButton.chat').on('click', () => { $('.language-chooser').addClass("hidden"); $(this).closest('.inputDiv').find('.se-custom-input').focus(); })
 
     // click language button
     $('.se-langpicker').off().on('click', function(e) {
@@ -652,15 +695,14 @@ function addLangDropdown(jNode) {
     // search language by html attributes
     $('.ChatTabContents').off().on("keyup", ".language-search", function() {
       var value = this.value.toLowerCase().trim();
-      if (value.length >= 2) {
+      if (value.length >= 1) {
           var elem = $(this);
           elem.data('search',  value)
           .clearQueue().stop()
-          .delay(100)
           .queue(function() {
-            $(".language-list button").show().filter(function() {
-                return $(this).attr("data-search").toLowerCase().trim().indexOf(value) == -1;
-            }).hide();
+            $(".language-list > button").removeClass('hidden').filter(function() {
+                return $(this).attr("data-search").toLowerCase().indexOf(value) === -1;
+            }).addClass('hidden');
             if (elem.data('search') !=  value) return;
           });
       } else if (value.length <= 1) {

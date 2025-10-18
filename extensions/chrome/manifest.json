@@ -45,6 +45,16 @@
                 "*://chaturbate.com/*",
                 "*://*.chaturbate.com/*"
             ]
+        },
+        {
+            "js":[
+                "page-settings.js"
+            ],
+            "css": [],
+            "matches": [
+                "*://chaturbate.com/p/*/?tab=settings",
+                "*://*.chaturbate.com/p/*/?tab=settings"
+            ]
         }
     ],
     "web_accessible_resources": [

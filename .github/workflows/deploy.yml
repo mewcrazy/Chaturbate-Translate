@@ -14,9 +14,12 @@ jobs:
       contents: write
       
     steps:
+      
       # Step 1: Download waitForKeyElements.js
       - uses: actions/checkout@v4
         with:
+          token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: false
           fetch-depth: 0
       - name: Downloading waitForKeyElements.js
         run: chmod +x build/build.sh && build/build.sh
@@ -59,26 +62,16 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
           force: true
-        
-      # Step 7: Generate Personal Access Token 
+
+      # Step 7: Generate a token
       - name: Generate a token
         id: generate_token
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
-      - uses: ./actions/staging-tests
-        with:
-          token: ${{ steps.app-token.outputs.token }}
 
-      # Step 8: Use Personal Access Token 
-      - name: Use the token
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          gh api octocat
-
-      # Step 9: Release pushed tag
+      # Step 8: Release pushed tag
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -92,10 +85,11 @@ jobs:
               --title="${tag#v}" \
               --generate-notes
           
-      # Step 10: Change Default Branch
+      # Step 9: Change Default Branch
       - name: Change Default Branch
         env:
-          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          tag: ${{ github.ref_name }}
+          GH_TOKEN: ${{ steps.generate_token.outputs.token }}
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
         run: |
+          gh api octocat
           gh repo edit --default-branch $tag

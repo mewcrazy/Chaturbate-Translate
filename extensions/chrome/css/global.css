@@ -14,10 +14,12 @@ button + .se-loader { display: none; }
 .enhanced-options-content .switcher.on .switcher-wrapper { transform: translateX(17px); }
 .enhanced-options-content .switcher .switcher-wrapper { transform: translateX(0); }
 .enhanced-options-modal { height: auto; width: 364px; position: fixed; overflow: hidden; -webkit-tap-highlight-color: transparent; z-index: 1101; display: block; font-size: 12px; margin: auto; box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px; background: white; border: 3px solid rgb(14, 108, 146); border-radius: 10px; visibility: visible; left: 623.5px; top: 42px; }
+.se-modal .title { top: 64px; }
+
 
 /* filters: favorites */
 .filters-favorites { display: inline-flex; gap: 20px; }
-.filters-favorites .country select { background-color: #222; border: 1px solid #000; border-radius: 14px; color: #f8f8f8; display: inline-block; height: 30px; line-height: 20px; padding: 7px 14px; font-size: .75rem; transition: 120ms ease-in-out; }
+.filters-favorites .country select { background: #222; border: 1px solid #000; border-radius: 14px; color: #f8f8f8; display: inline-block; height: 30px; line-height: 20px; padding: 7px 14px; transition: 120ms ease-in-out; }
 .filters-favorites .search input, .filters-favorites .search input:focus { background: #222 !important; border-radius: 14px; height: 30px !important; padding: 7px 14px !important; }
 .filters-favorites > div { display: flex; font-size: 13px; gap: 10px; align-items: center; }
 .filters-favorites .model-filter-link { position: relative; padding: 0 4px; }
@@ -126,6 +128,7 @@ button + .se-loader { display: none; }
 
 /* Message templates */
 .se-message-templates { background: #17202a; border-radius: 8px 8px 0 0; padding: 16px 16px 8px; bottom: 33px; right: 0; left: 0; height: 40%; position: absolute; z-index: 2; overflow: hidden }
+.se-message-templates:after { content: " "; display: block; background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, transparent 100%); top: 100%; left: 0; right: 0; }
 .se-message-templates .title-block { display: flex; }
 .se-message-templates .title-block .search { flex: 1; }
 .se-message-templates-btn { background: none; border: 0; outline: 0; cursor: pointer; margin-right: 2px; }
@@ -133,20 +136,35 @@ button + .se-loader { display: none; }
 .se-message-templates-btn:hover * { fill: #fff }
 .se-message-templates-btn:hover { color: rgb(99,161,99) !important; }
 .se-messages-tpl-list { margin: 0; padding: 0; columns: 2; list-style: none; }
+.empty+.se-messages-tpl-list { margin-top: 0; }
 .se-close-message-tpl { pointer-events: auto; cursor: pointer; background: 0; color: rgba(255,255,255,.6); border: 0; outline: 0; justify-self: flex-end; }
-.se-message-tpl { margin-top: 7px; }
+.se-message-tpl {  margin-top: 7px;  }
 .se-message-tpl:first-of-type { margin-top: 0; }
-.se-message-tpl span { padding: 10px; border-radius: 6px; display: inline-block; background: #222; font-size: 0.875em; cursor: pointer; }
-.se-message-tpl span:hover { background: #141414; }
+.se-message-tpl span { display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical; text-overflow: ellipsis; height: 45px; padding: 10px; border-radius: 6px; background: #2a323f; border: 1px solid #2d3e50; padding: 3px; line-height: 1.5em; font-size: 13px; letter-spacing: 0.03em; font-style: italic; cursor: pointer; }
+.se-message-tpl span:hover { background: #2d3e50; }
 .se-add-message { cursor: pointer; }
-.se-add-message .icon-add { width: 30px; height: 30px; fill: #141414; }
+.se-add-message .icon-add { width: 30px; height: 30px; fill: #b3b3b3; }
 .se-add-message:hover .icon-add { fill: #000; }
 
 /* take screenshot */
 .se-take-screenshot { margin-right: 5px; }
 
 /* minor fixes */
-#sendTipButton { max-width: auto !important; }
+#VideoPanel .sendTipButton { max-width: auto !important; }
+.followRecommendedContainer > div:first-child { display: flex; flex-direction: row-reverse; justify-content: space-between; }
+
+/* move tabs */
+#tab-row > .chat-tab-handle:not(.active) { cursor: pointer !important; }
+
+/* additional notifications */
+.auto-refill-fieldset + fieldset > table, .se-additional-notifications { float: left; width: calc(50% - 1px); }
+.se-additional-notifications:after { clear: both; content: " "; display: table; }
+.se-additional-notifications { border: 1px solid #2d3e50; }
+.se-additional-notifications .se-title { border-bottom: 1px solid #f47321; background: rgba(42, 123, 155, 1); color: #fff; }
+.se-additional-notifications .se-title>* { margin: 0; padding: 5px 10px; font-size: 15px; font-weight: 400; }
+.se-additional-notifications .se-content { padding: 10px; }
 
 /* keyframes */
 @keyframes rotate {
